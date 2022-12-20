@@ -4,14 +4,10 @@ import { StyleSheet, Text, View } from "react-native";
 import { Button, Input } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {
-  initializeAuth,
   getAuth,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import "firebase/auth";
-import Constants from "expo-constants";
-
-// import { initializeApp } from "firebase/app";
 
 
 const auth = getAuth();

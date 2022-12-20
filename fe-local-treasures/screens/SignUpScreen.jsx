@@ -11,6 +11,9 @@ import {
 import "firebase/auth";
 import Constants from "expo-constants";
 
+// import { initializeApp } from "firebase/app";
+
+
 const auth = getAuth();
 
 export default function SignUpScreen({ navigation }) {
@@ -61,7 +64,7 @@ export default function SignUpScreen({ navigation }) {
           secureTextEntry={true}
           leftIcon={<Icon name="key" size={16} />}
         />
-        {!userInfo.error ? (
+        {userInfo.error ? (
           <View style={styles.error}>
             <Text style={styles.error}>{userInfo.error}</Text>
           </View>
@@ -80,7 +83,6 @@ export default function SignUpScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
   },
   error: {

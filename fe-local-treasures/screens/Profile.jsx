@@ -1,12 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Button } from 'react-native-elements';
 
-export default function HomeScreen({navigation}) {
+export default function ProfileScreen() {
   return (
     <View style={styles.container}>
-      <Button title="Open map" onPress={() => {navigation.navigate("Map")}}/>
+      <Text>Profile screen!</Text>
       <StatusBar style="auto" />
     </View>
   );

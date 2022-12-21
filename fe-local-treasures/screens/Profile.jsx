@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { signOut } from 'firebase/auth';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { getAuth } from 'firebase/auth';
+import {styles} from '../styles/welcome'
 
 const auth = getAuth()
 
@@ -20,13 +21,3 @@ export default function ProfileScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    marginTop: 10 
-  }
-});

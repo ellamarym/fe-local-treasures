@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { Button } from 'react-native-elements';
+import {styles} from '../styles/home'
 
 export default function HomeScreen({navigation}) {
 
@@ -11,10 +12,3 @@ export default function HomeScreen({navigation}) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

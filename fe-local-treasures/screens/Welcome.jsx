@@ -1,7 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { View } from "react-native";
 import { Button } from "react-native-elements";
+import {styles} from '../styles/welcome'
 
 export default function Welcome({ navigation }) {
   return (
@@ -28,17 +29,4 @@ export default function Welcome({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttons: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  button: {
-    marginTop: 10,
-  },
-});
+

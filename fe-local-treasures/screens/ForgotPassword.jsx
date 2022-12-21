@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
 import { StatusBar } from "expo-status-bar";
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View } from 'react-native'
 import { Input, Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import {styles} from '../styles/forgotPassword'
 
 var auth = getAuth();
 
@@ -49,22 +50,3 @@ export default function ForgotPassword (){
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
-      },
-      controls: {
-        flex: 1,
-        width: "80%",
-        justifyContent: "center",
-      },
-      error: {
-        color: 'red',
-        alignItems: "center"
-      },
-      control: {
-        marginTop: 10,
-      },
-})

@@ -7,7 +7,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const auth = getAuth();
 
-export default function SignInScreen() {
+export default function SignInScreen({ navigation }) {
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -50,8 +50,14 @@ export default function SignInScreen() {
             <Text style={styles.error}>{userInfo.error}</Text>
           </View>
         ) : null}
+        <Text
+          style={styles.forgotPassNav}
+          onPress={() => {
+            navigation.navigate("Forgot Password");
+          }}
+        > Forgot password?</Text>
         <Button title="Sign in" buttonStyle={styles.control} onPress={signIn} />
-      </View>
+      </View>      
       <StatusBar style="auto" />
     </View>
   );
@@ -75,4 +81,10 @@ const styles = StyleSheet.create({
   control: {
     marginTop: 10,
   },
+  forgotPassNav:{
+    fontWeight:"bold",
+    textAlign: "center",
+    marginTop: 10,
+    marginBottom: 10
+  }
 });

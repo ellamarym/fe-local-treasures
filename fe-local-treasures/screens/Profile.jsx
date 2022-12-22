@@ -7,15 +7,19 @@ import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { getAuth } from 'firebase/auth';
 import {styles} from '../styles/welcome'
 
-const auth = getAuth()
+const auth = getAuth();
 
 export default function ProfileScreen() {
-    const { user } = useAuthentication()
+  const { user } = useAuthentication();
 
   return (
     <View style={styles.container}>
-      <Text>Welcome {user?.email}!</Text>
-      <Button title="Sign out" style={styles.button} onPress={() => signOut(auth)}/>
+      <Text style={styles.title}>Welcome {user?.email}!</Text>
+      <Button
+        title="Sign out"
+        style={styles.button}
+        onPress={() => signOut(auth)}
+      />
       <StatusBar style="auto" />
     </View>
   );

@@ -1,11 +1,53 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import MapView from "react-native-maps";
+import React, { useEffect } from "react";
+import { StyleSheet, View, Text } from "react-native";
+import MapView, { Marker, Callout } from "react-native-maps";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { fetchHunts } from "../utils/api/huntApi";
+import { useState } from "react";
 
-export default function MapScreen() {
+export default function MapScreen({ navigation }) {
+  const [hunts, setHunts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchHunts().then((fetchedHunts) => {
+      setHunts(fetchedHunts);
+      setIsLoading(false);
+    });
+  }, []);
+
+  const huntMarkers = () => {
+    return hunts.map((hunt) => (
+      <Marker
+        key={hunt._id}
+        coordinate={{
+          latitude: hunt.checkpoints[1].lat,
+          longitude: hunt.checkpoints[1].long,
+        }}
+      >
+        <Callout
+          onPress={() =>
+            navigation.navigate("Hunt", {
+              id: hunt.title,
+              title: hunt.title,
+              location: hunt.location,
+              distance: hunt.distance,
+            })
+          }
+          style={styles.callout}
+        >
+          <Text>{hunt.title}</Text>
+          <Icon name="arrow-right" style={styles.calloutIcon}></Icon>
+        </Callout>
+      </Marker>
+    ));
+  };
+
   return (
     <View style={styles.container}>
       <MapView
+        showsUserLocation={true}
+        showsMyLocationButton={true}
         style={styles.map}
         initialRegion={{
           latitude: 53.4576,
@@ -13,7 +55,9 @@ export default function MapScreen() {
           latitudeDelta: 5,
           longitudeDelta: 5,
         }}
-      />
+      >
+        {isLoading ? null : huntMarkers()}
+      </MapView>
     </View>
   );
 }
@@ -27,5 +71,14 @@ const styles = StyleSheet.create({
   map: {
     width: "100%",
     height: "100%",
+  },
+  callout: {
+    padding: 5,
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  calloutIcon: {
+    margin: 5,
   },
 });

@@ -7,10 +7,13 @@ import { fetchHunts } from "../utils/api/huntApi";
 import { useState } from "react";
 import { Button } from 'react-native-elements';
 
+import * as Location from 'expo-location';
 
 export default function MapScreen({ navigation }) {
   const [hunts, setHunts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   useEffect(() => {
     fetchHunts().then((fetchedHunts) => {
@@ -45,6 +48,27 @@ export default function MapScreen({ navigation }) {
       </Marker>
     ));
   };
+
+  useEffect(() => {
+    (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
 
   return (
     <View style={styles.container}>

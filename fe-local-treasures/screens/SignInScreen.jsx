@@ -1,9 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, Button } from "react-native-elements";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {styles} from '../styles/signInScreen'
 
 const auth = getAuth();
 
@@ -63,28 +64,4 @@ export default function SignInScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  error: {
-    color: 'red',
-    alignItems: "center"
-  },
-  controls: {
-    flex: 1,
-    width: "80%",
-    justifyContent: "center",
-  },
-  control: {
-    marginTop: 10,
-  },
-  forgotPassNav:{
-    fontWeight:"bold",
-    textAlign: "center",
-    marginTop: 10,
-    marginBottom: 10
-  }
-});
+

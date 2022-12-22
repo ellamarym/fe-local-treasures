@@ -1,9 +1,11 @@
+import {styles} from '../styles/map'
 import React, { useEffect } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import {View, Text } from "react-native";
 import MapView, { Marker, Callout } from "react-native-maps";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { fetchHunts } from "../utils/api/huntApi";
 import { useState } from "react";
+
 
 export default function MapScreen({ navigation }) {
   const [hunts, setHunts] = useState([]);
@@ -61,24 +63,3 @@ export default function MapScreen({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  map: {
-    width: "100%",
-    height: "100%",
-  },
-  callout: {
-    padding: 5,
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  calloutIcon: {
-    margin: 5,
-  },
-});

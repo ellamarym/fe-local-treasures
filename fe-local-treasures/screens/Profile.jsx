@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { signOut } from "firebase/auth";
 import React from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-elements";
 import { useAuthentication } from "../utils/hooks/useAuthentication";
 import { getAuth } from "firebase/auth";

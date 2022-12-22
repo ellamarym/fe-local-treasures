@@ -1,12 +1,11 @@
-import { StatusBar } from "expo-status-bar";
-import { signOut } from "firebase/auth";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Button } from "react-native-elements";
-import { useAuthentication } from "../utils/hooks/useAuthentication";
-import { getAuth } from "firebase/auth";
-import {styles} from '../styles/map'
-
+import { StatusBar } from 'expo-status-bar';
+import { signOut } from 'firebase/auth';
+import React from 'react';
+import { Text, View } from 'react-native';
+import { Button } from 'react-native-elements';
+import { useAuthentication } from '../utils/hooks/useAuthentication';
+import { getAuth } from 'firebase/auth';
+import {styles} from '../styles/profile'
 
 const auth = getAuth();
 
@@ -25,5 +24,3 @@ export default function ProfileScreen() {
     </View>
   );
 }
-
-

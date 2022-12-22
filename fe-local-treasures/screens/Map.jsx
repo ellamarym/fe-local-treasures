@@ -1,10 +1,10 @@
+import {styles} from '../styles/map'
 import React, { useEffect } from "react";
 import {View, Text } from "react-native";
 import MapView, { Marker, Callout } from "react-native-maps";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { fetchHunts } from "../utils/api/huntApi";
 import { useState } from "react";
-import {styles} from '../styles/map'
 
 
 export default function MapScreen({ navigation }) {
@@ -63,5 +63,3 @@ export default function MapScreen({ navigation }) {
     </View>
   );
 }
-
-

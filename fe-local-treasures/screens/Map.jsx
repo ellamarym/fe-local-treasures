@@ -5,6 +5,7 @@ import MapView, { Marker, Callout } from "react-native-maps";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { fetchHunts } from "../utils/api/huntApi";
 import { useState } from "react";
+import { Button } from 'react-native-elements';
 
 
 export default function MapScreen({ navigation }) {
@@ -47,6 +48,7 @@ export default function MapScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <Button title="Switch to table view" onPress={() => {navigation.navigate("HuntsTable")}}/>
       <MapView
         showsUserLocation={true}
         showsMyLocationButton={true}

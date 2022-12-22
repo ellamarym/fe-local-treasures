@@ -7,7 +7,8 @@ export default function HomeScreen({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Button title="Open map" onPress={() => {navigation.navigate("Map")}}/>
+      <Button title="Open hunts on map" onPress={() => {navigation.navigate("Map")}}/>
+      <Button title="Open hunts on table" onPress={() => {navigation.navigate("HuntsTable")}}/>
     </View>
   );
 }

@@ -48,7 +48,7 @@ export default function SignUpScreen({ navigation }) {
       setUserInfo({ ...userInfo, error: "All fields are required" });
       return;
     }
-    console.log("userInfo", userInfo)
+    // console.log("userInfo", userInfo)
     // try {
     //   await createUserWithEmailAndPassword(
     //     auth,

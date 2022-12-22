@@ -1,25 +1,21 @@
-import { StatusBar } from "expo-status-bar";
-import { signOut } from "firebase/auth";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-elements";
 import { useAuthentication } from "../utils/hooks/useAuthentication";
-import { getAuth } from "firebase/auth";
 
-const auth = getAuth();
-
-export default function ProfileScreen() {
+export default function HuntScreen({ route }) {
+  const { title, location, distance } = route.params;
   const { user } = useAuthentication();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome {user?.email}!</Text>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.information}>Location: {location}</Text>
+      <Text style={styles.information}>Distance: {distance} miles</Text>
       <Button
-        title="Sign out"
-        style={styles.button}
-        onPress={() => signOut(auth)}
-      />
-      <StatusBar style="auto" />
+        title={user ? "Start" : "Log in to start"}
+        disabled={!user}
+      ></Button>
     </View>
   );
 }
@@ -30,10 +26,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  button: {
-    marginTop: 10,
-  },
   title: {
     fontSize: 22,
+    margin: 5,
+  },
+  information: {
+    margin: 5,
   },
 });

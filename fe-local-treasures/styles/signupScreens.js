@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   error: {
-    alignItems: "center",
     color: "red",
   },
   controls: {
@@ -22,6 +21,15 @@ const styles = StyleSheet.create({
   btnUplodImg: {
     marginTop: 10,
     backgroundColor: "#D3D3D3",
+  },
+  textCenter: {
+    alignItems: "center",
+  },
+  inProgress: {
+    color: "#FFA500",
+  },
+  done: {
+    color: "#00FF00",
   },
 });
 

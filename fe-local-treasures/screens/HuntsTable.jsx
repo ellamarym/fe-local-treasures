@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Button, Text } from "react-native-elements";
 import { fetchHunts } from "../utils/api/huntApi";
 import { DataTable } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
+import { styles } from "../styles/huntsTable";
+import { globalStyles } from "../styles/globalStyles";
 
 export const HuntsTable = ({ navigation }) => {
   const [hunts, setHunts] = useState([]);
@@ -41,13 +42,7 @@ export const HuntsTable = ({ navigation }) => {
   };
 
   return (
-    <View>
-      <Button
-        title="Open hunts on map"
-        onPress={() => {
-          navigation.navigate("Map");
-        }}
-      />
+    <View style={styles.view}>
       <DataTable>
         <DataTable.Header>
           <DataTable.Title>Title</DataTable.Title>
@@ -58,6 +53,16 @@ export const HuntsTable = ({ navigation }) => {
 
         {isLoading ? null : huntRows()}
       </DataTable>
+      <View style={globalStyles.switchButtonView}>
+        <Pressable
+          style={globalStyles.switchButton}
+          onPress={() => {
+            navigation.navigate("Map");
+          }}
+        >
+          <Icon name="map" style={styles.calloutIcon}></Icon>
+        </Pressable>
+      </View>
     </View>
   );
 };

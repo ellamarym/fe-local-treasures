@@ -1,13 +1,11 @@
-import {styles} from '../styles/map'
-import React, { useEffect } from "react";
-import {View, Text } from "react-native";
+import { styles } from "../styles/map";
+import { globalStyles } from "../styles/globalStyles";
+import React, { useEffect, useState } from "react";
+import { View, Text, Pressable } from "react-native";
 import MapView, { Marker, Callout } from "react-native-maps";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { fetchHunts } from "../utils/api/huntApi";
-import { useState } from "react";
-import { Button } from 'react-native-elements';
-
-import * as Location from 'expo-location';
+import * as Location from "expo-location";
 
 export default function MapScreen({ navigation }) {
   const [hunts, setHunts] = useState([]);
@@ -51,10 +49,9 @@ export default function MapScreen({ navigation }) {
 
   useEffect(() => {
     (async () => {
-      
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
         return;
       }
 
@@ -63,7 +60,7 @@ export default function MapScreen({ navigation }) {
     })();
   }, []);
 
-  let text = 'Waiting..';
+  let text = "Waiting..";
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
@@ -72,7 +69,6 @@ export default function MapScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Button title="Switch to table view" onPress={() => {navigation.navigate("HuntsTable")}}/>
       <MapView
         showsUserLocation={true}
         showsMyLocationButton={true}
@@ -86,6 +82,16 @@ export default function MapScreen({ navigation }) {
       >
         {isLoading ? null : huntMarkers()}
       </MapView>
+      <View style={globalStyles.switchButtonView}>
+        <Pressable
+          style={globalStyles.switchButton}
+          onPress={() => {
+            navigation.navigate("List");
+          }}
+        >
+          <Icon name="list" style={styles.calloutIcon}></Icon>
+        </Pressable>
+      </View>
     </View>
   );
 }

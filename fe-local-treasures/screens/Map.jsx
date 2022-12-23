@@ -1,12 +1,10 @@
 import { styles } from "../styles/map";
-import React, { useEffect } from "react";
-import { View, Text } from "react-native";
+import { globalStyles } from "../styles/globalStyles";
+import React, { useEffect, useState } from "react";
+import { View, Text, Pressable } from "react-native";
 import MapView, { Marker, Callout } from "react-native-maps";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { fetchHunts } from "../utils/api/huntApi";
-import { useState } from "react";
-import { Button } from "react-native-elements";
-
 import * as Location from "expo-location";
 
 export default function MapScreen({ navigation }) {
@@ -75,29 +73,30 @@ export default function MapScreen({ navigation }) {
     text = JSON.stringify(location);
   }
 
-  setInterval(() => {
-    console.log(location);
-  }, 1000);
-  // location
-  //   ? setRegion({
-  //       latitude: location.latitude,
-  //       longitude: location.longitude,
-  //       latitudeDelta: 1,
-  //       longitudeDelta: 1,
-  //     })
-  //   : null;
+  useEffect(() => {
+    const interval = setInterval(() => {
+      
+    }, interval);
 
-  // console.log(location);
+  })
 
-
+  useEffect(() => {
+    setInterval(() => {
+      console.log('Interval triggered')
+      console.log(parseFloat(location.coords.latitude));
+      location
+      ? setRegion({
+          latitude: parseFloat(location.coords.latitude),
+          longitude: parseFloat(location.coords.longitude),
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05,
+        }) : {};
+    }, 1000);
+    return () => clearInterval(interval.coords);
+  }, []); 
+    
   return (
-    <View style={styles.container}>
-      <Button
-        title="Switch to table view"
-        onPress={() => {
-          navigation.navigate("HuntsTable");
-        }}
-      />
+    <View style={styles.container} >
       <MapView
         showsUserLocation={true}
         showsMyLocationButton={true}
@@ -106,6 +105,16 @@ export default function MapScreen({ navigation }) {
       >
         {isLoading ? null : huntMarkers()}
       </MapView>
+      <View style={globalStyles.switchButtonView}>
+        <Pressable
+          style={globalStyles.switchButton}
+          onPress={() => {
+            navigation.navigate("List");
+          }}
+        >
+          <Icon name="list" style={styles.calloutIcon}></Icon>
+        </Pressable>
+      </View>
     </View>
   );
 }

@@ -29,16 +29,16 @@ export default function MapScreen({ navigation }) {
   const huntMarkers = () => {
     return hunts.map((hunt) => (
       <Marker
-        key={hunt._id}
+        key={hunt.id}
         coordinate={{
-          latitude: hunt.checkpoints[1].lat,
-          longitude: hunt.checkpoints[1].long,
+          latitude: hunt.startPoint.lat,
+          longitude: hunt.startPoint.long,
         }}
       >
         <Callout
           onPress={() =>
             navigation.navigate("Hunt", {
-              id: hunt.title,
+              id: hunt.id,
               title: hunt.title,
               location: hunt.location,
               distance: hunt.distance,

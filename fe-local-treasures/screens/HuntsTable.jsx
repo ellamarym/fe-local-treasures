@@ -20,7 +20,7 @@ export const HuntsTable = ({ navigation }) => {
   const huntRows = () => {
     return hunts.map((hunt) => {
       return (
-        <DataTable.Row key={hunt._id}>
+        <DataTable.Row key={hunt.id}>
           <DataTable.Cell>{hunt.title}</DataTable.Cell>
           <DataTable.Cell>{hunt.location}</DataTable.Cell>
           <DataTable.Cell>{hunt.distance}</DataTable.Cell>

@@ -27,10 +27,7 @@ export const HuntsTable = ({ navigation }) => {
           <DataTable.Cell
             onPress={() => {
               navigation.navigate("Hunt", {
-                id: hunt.title,
-                title: hunt.title,
-                location: hunt.location,
-                distance: hunt.distance,
+                id: hunt.id,
               });
             }}
           >

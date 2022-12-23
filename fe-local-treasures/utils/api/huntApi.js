@@ -9,3 +9,9 @@ export const fetchHunts = () => {
     return hunts;
   });
 };
+
+export const fetchHuntById = (id) => {
+  return localTreasuresApi.get(`/hunts/${id}`).then(({ data: { hunt } }) => {
+    return hunt;
+  });
+};

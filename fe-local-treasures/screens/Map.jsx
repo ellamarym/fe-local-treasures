@@ -12,6 +12,12 @@ export default function MapScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [region, setRegion] = useState({
+    latitude: 53.4576,
+    longitude: -2.1578,
+    latitudeDelta: 5,
+    longitudeDelta: 5,
+  });
 
   useEffect(() => {
     fetchHunts().then((fetchedHunts) => {
@@ -67,18 +73,35 @@ export default function MapScreen({ navigation }) {
     text = JSON.stringify(location);
   }
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      
+    }, interval);
+
+  })
+
+  useEffect(() => {
+    setInterval(() => {
+      console.log('Interval triggered')
+      console.log(parseFloat(location.coords.latitude));
+      location
+      ? setRegion({
+          latitude: parseFloat(location.coords.latitude),
+          longitude: parseFloat(location.coords.longitude),
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05,
+        }) : {};
+    }, 1000);
+    return () => clearInterval(interval.coords);
+  }, []); 
+    
   return (
-    <View style={styles.container}>
+    <View style={styles.container} >
       <MapView
         showsUserLocation={true}
         showsMyLocationButton={true}
         style={styles.map}
-        initialRegion={{
-          latitude: 53.4576,
-          longitude: -2.1578,
-          latitudeDelta: 5,
-          longitudeDelta: 5,
-        }}
+        initialRegion={region}
       >
         {isLoading ? null : huntMarkers()}
       </MapView>

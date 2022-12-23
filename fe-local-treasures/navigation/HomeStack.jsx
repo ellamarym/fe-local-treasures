@@ -13,7 +13,7 @@ export default function HomeStack() {
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Map" component={MapScreen} />
-      <Stack.Screen name="HuntsTable" component={HuntsTable} />
+      <Stack.Screen name="List" component={HuntsTable} />
       <Stack.Screen name="Hunt" component={HuntScreen} />
     </Stack.Navigator>
   );

@@ -1,21 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-elements";
+import { fetchHuntById } from "../utils/api/huntApi";
 import { useAuthentication } from "../utils/hooks/useAuthentication";
 
 export default function HuntScreen({ route }) {
-  const { title, location, distance } = route.params;
+  const { id } = route.params;
   const { user } = useAuthentication();
+
+  const [hunt, setHunt] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchHuntById(id).then((fetchedHunt) => {
+      setHunt(fetchedHunt);
+      setIsLoading(false);
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.information}>Location: {location}</Text>
-      <Text style={styles.information}>Distance: {distance} miles</Text>
-      <Button
-        title={user ? "Start" : "Log in to start"}
-        disabled={!user}
-      ></Button>
+      {isLoading ? null : (
+        <View>
+          <Text style={styles.title}>{hunt.title}</Text>
+          <Text style={styles.information}>Location: {hunt.location}</Text>
+          <Text style={styles.information}>
+            Distance: {hunt.distance} miles
+          </Text>
+          <Button
+            title={user ? "Start" : "Log in to start"}
+            disabled={!user}
+          ></Button>
+        </View>
+      )}
     </View>
   );
 }

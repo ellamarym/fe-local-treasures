@@ -11,13 +11,13 @@ const styles = StyleSheet.create({
   title: {
     color: "#d5e1ed",
     fontSize: 42,
-    fontFamily: "American Typewriter",
+    // fontFamily: "American Typewriter",
   },
 
   subtitle: {
     color: "#ccdef0",
     fontSize: 20,
-    fontFamily: "American Typewriter",
+    // fontFamily: "American Typewriter",
   },
 
   treasuremap: {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     height: 180,
     width: 180,
     margin: 30,
-    borderRadius: "100%",
+    // borderRadius: "100%",
     backgroundColor: "white",
   },
 
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     marginVertical: 10,
     width: "70%",
-    borderRadius: 50,
+    // borderRadius: 50,
     backgroundColor: "#EAAA00",
     alignItems: "center",
     justifyContent: "center",

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchHunts } from "../utils/api/huntApi";
 import { DataTable } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { Pressable, View } from "react-native";
+import { Pressable, View, Text } from "react-native";
 import { styles } from "../styles/huntsTable";
 import { globalStyles } from "../styles/globalStyles";
 
@@ -60,6 +60,7 @@ export const HuntsTable = ({ navigation }) => {
             navigation.navigate("Map");
           }}
         >
+          <Text>View Map</Text>
           <Icon name="map" style={styles.calloutIcon}></Icon>
         </Pressable>
       </View>

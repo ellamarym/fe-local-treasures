@@ -8,11 +8,12 @@ const globalStyles = StyleSheet.create({
     backgroundColor: "#EAAA00",
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "row",
   },
   switchButtonView: {
     position: "absolute",
     bottom: "0%",
-    alignSelf: "flex-end",
+    alignSelf: "center",
   },
 });
 

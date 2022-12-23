@@ -74,29 +74,26 @@ export default function MapScreen({ navigation }) {
   }
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      
-    }, interval);
+    const interval = setInterval(() => {}, interval);
+  });
 
-  })
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     console.log('Interval triggered')
+  //     console.log(parseFloat(location.coords.latitude));
+  //     location
+  //     ? setRegion({
+  //         latitude: parseFloat(location.coords.latitude),
+  //         longitude: parseFloat(location.coords.longitude),
+  //         latitudeDelta: 0.05,
+  //         longitudeDelta: 0.05,
+  //       }) : {};
+  //   }, 1000);
+  //   return () => clearInterval(interval.coords);
+  // }, []);
 
-  useEffect(() => {
-    setInterval(() => {
-      console.log('Interval triggered')
-      console.log(parseFloat(location.coords.latitude));
-      location
-      ? setRegion({
-          latitude: parseFloat(location.coords.latitude),
-          longitude: parseFloat(location.coords.longitude),
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
-        }) : {};
-    }, 1000);
-    return () => clearInterval(interval.coords);
-  }, []); 
-    
   return (
-    <View style={styles.container} >
+    <View style={styles.container}>
       <MapView
         showsUserLocation={true}
         showsMyLocationButton={true}
@@ -112,6 +109,7 @@ export default function MapScreen({ navigation }) {
             navigation.navigate("List");
           }}
         >
+          <Text>View List</Text>
           <Icon name="list" style={styles.calloutIcon}></Icon>
         </Pressable>
       </View>

@@ -1,19 +1,25 @@
-import {styles} from '../styles/map'
+import { styles } from "../styles/map";
 import React, { useEffect } from "react";
-import {View, Text } from "react-native";
+import { View, Text } from "react-native";
 import MapView, { Marker, Callout } from "react-native-maps";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { fetchHunts } from "../utils/api/huntApi";
 import { useState } from "react";
-import { Button } from 'react-native-elements';
+import { Button } from "react-native-elements";
 
-import * as Location from 'expo-location';
+import * as Location from "expo-location";
 
 export default function MapScreen({ navigation }) {
   const [hunts, setHunts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [region, setRegion] = useState({
+    latitude: 53.4576,
+    longitude: -2.1578,
+    latitudeDelta: 5,
+    longitudeDelta: 5,
+  });
 
   useEffect(() => {
     fetchHunts().then((fetchedHunts) => {
@@ -51,10 +57,9 @@ export default function MapScreen({ navigation }) {
 
   useEffect(() => {
     (async () => {
-      
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
         return;
       }
 
@@ -63,26 +68,41 @@ export default function MapScreen({ navigation }) {
     })();
   }, []);
 
-  let text = 'Waiting..';
+  let text = "Waiting..";
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
   }
 
+  setInterval(() => {
+    console.log(location);
+  }, 1000);
+  // location
+  //   ? setRegion({
+  //       latitude: location.latitude,
+  //       longitude: location.longitude,
+  //       latitudeDelta: 1,
+  //       longitudeDelta: 1,
+  //     })
+  //   : null;
+
+  // console.log(location);
+
+
   return (
     <View style={styles.container}>
-      <Button title="Switch to table view" onPress={() => {navigation.navigate("HuntsTable")}}/>
+      <Button
+        title="Switch to table view"
+        onPress={() => {
+          navigation.navigate("HuntsTable");
+        }}
+      />
       <MapView
         showsUserLocation={true}
         showsMyLocationButton={true}
         style={styles.map}
-        initialRegion={{
-          latitude: 53.4576,
-          longitude: -2.1578,
-          latitudeDelta: 5,
-          longitudeDelta: 5,
-        }}
+        initialRegion={region}
       >
         {isLoading ? null : huntMarkers()}
       </MapView>

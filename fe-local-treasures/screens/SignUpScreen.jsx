@@ -61,7 +61,6 @@ export default function SignUpScreen({ navigation }) {
         xhr.send(null);
       });
 
-      /** @type {any} */
       const metadata = {
         contentType: "image/jpeg",
       };
@@ -78,10 +77,8 @@ export default function SignUpScreen({ navigation }) {
           setProgressBar(progress);
           switch (snapshot.state) {
             case "paused":
-              console.log("Upload is paused");
               break;
             case "running":
-              console.log("Upload is running");
               break;
           }
         },
@@ -91,7 +88,6 @@ export default function SignUpScreen({ navigation }) {
               break;
             case "storage/canceled":
               break;
-            // ...
             case "storage/unknown":
               break;
           }

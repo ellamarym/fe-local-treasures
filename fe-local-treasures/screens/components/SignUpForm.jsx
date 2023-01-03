@@ -17,7 +17,7 @@ function SignUpForm({
   return (
     <View style={styles.controls}>
       <Input
-        placeholder="username"
+        placeholder="Username"
         containerStyle={styles.control}
         value={userInfo.username}
         onChangeText={(text) => {
@@ -26,7 +26,7 @@ function SignUpForm({
         leftIcon={<Icon name="user" size={16} />}
       />
       <Input
-        placeholder="firstname"
+        placeholder="First Name"
         containerStyle={styles.control}
         value={userInfo.firstname}
         onChangeText={(text) => {
@@ -35,7 +35,7 @@ function SignUpForm({
         leftIcon={<Icon name="user" size={16} />}
       />
       <Input
-        placeholder="lastname"
+        placeholder="Last Name"
         containerStyle={styles.control}
         value={userInfo.lastname}
         onChangeText={(text) => {

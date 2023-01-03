@@ -5,6 +5,7 @@ import { styles } from "../styles/startHunt";
 import { textStyles } from "../styles/textStyles";
 import * as Location from "expo-location";
 import haversine from "haversine-distance";
+import { FlagQuestions } from "../utils/questions";
 
 export const StartScreen = ({ route }) => {
   const { hunt } = route.params;
@@ -22,7 +23,7 @@ export const StartScreen = ({ route }) => {
     let interval = null;
     if (isActive) {
       interval = setInterval(() => {
-        setSeconds(seconds => seconds + 1);
+        setSeconds((seconds) => seconds + 1);
       }, 1000);
     } else if (!isActive && seconds !== 0) {
       clearInterval(interval);
@@ -30,8 +31,8 @@ export const StartScreen = ({ route }) => {
     return () => clearInterval(interval);
   }, [isActive, seconds]);
 
-  const timeInMinutes = Math.floor(seconds/60)
-  const secondsRemaining = seconds % 60
+  const timeInMinutes = Math.floor(seconds / 60);
+  const secondsRemaining = seconds % 60;
 
   useEffect(() => {
     (async () => {
@@ -108,6 +109,7 @@ export const StartScreen = ({ route }) => {
           Time: {timeInMinutes}:{secondsRemaining}
         </Text>
       </View>
+      {FlagQuestions()}
     </View>
   );
 };

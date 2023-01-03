@@ -37,7 +37,9 @@ export default function RootNavigation() {
             name="Profile"
             component={UserStack}
             options={{
-              tabBarIcon: () => <Icon name="user" size={16} />,
+              tabBarIcon: () => (
+                <Icon name="user" style={textStyles.oxygenRegLight16} />
+              ),
             }}
           ></Tab.Screen>
         ) : (

@@ -1,9 +1,15 @@
 import { StyleSheet } from "react-native";
 
 const globalStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
   switchButton: {
     padding: 12,
-    margin: 8,
+    margin: 20,
     borderRadius: 50,
     backgroundColor: "#EAAA00",
     alignItems: "center",

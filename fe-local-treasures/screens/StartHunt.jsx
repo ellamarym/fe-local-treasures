@@ -35,7 +35,7 @@ export const StartScreen = ({ route }) => {
   const secondsRemaining = seconds % 60;
 
   useEffect(() => {
-    (async () => {
+    const interval = setInterval(async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
@@ -44,24 +44,28 @@ export const StartScreen = ({ route }) => {
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-    })();
+    }, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    const currentDistance = location
-      ? haversine(
-          {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          },
-          {
-            latitude: hunt.checkpoints[currentCheckpoint].lat,
-            longitude: hunt.checkpoints[currentCheckpoint].long,
-          }
-        )
-      : null;
-    const roundedDistance = Math.round(currentDistance);
-    setDistance(roundedDistance);
+    const interval = setInterval(() => {
+      const currentDistance = location
+        ? haversine(
+            {
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude,
+            },
+            {
+              latitude: hunt.checkpoints[currentCheckpoint].lat,
+              longitude: hunt.checkpoints[currentCheckpoint].long,
+            }
+          )
+        : null;
+      const roundedDistance = Math.round(currentDistance);
+      setDistance(roundedDistance);
+    }, 2000);
+    return () => clearInterval(interval);
   }, [location]);
 
   const huntMarkers = () => {

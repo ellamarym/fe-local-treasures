@@ -130,7 +130,7 @@ export default function SignUpScreen({ navigation }) {
       );
       navigation.navigate("Sign In");
     } catch (err) {
-      setUserInfo({ ...userInfo, error: err.message });
+      setUserInfo({ ...userInfo, error: err });
     }
     setUserInfo({ ...userInfo, error: "" });
   }

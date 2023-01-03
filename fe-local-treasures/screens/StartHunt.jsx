@@ -11,6 +11,27 @@ export const StartScreen = ({ route }) => {
   const [currentCheckpoint, setCurrentCheckpoint] = useState(1);
   const [location, setLocation] = useState(null);
   const [distance, setDistance] = useState(null);
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(true);
+
+  function toggle() {
+    setIsActive(!isActive);
+  }
+
+  useEffect(() => {
+    let interval = null;
+    if (isActive) {
+      interval = setInterval(() => {
+        setSeconds(seconds => seconds + 1);
+      }, 1000);
+    } else if (!isActive && seconds !== 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, seconds]);
+
+  const timeInMinutes = Math.floor(seconds/60)
+  const secondsRemaining = seconds % 60
 
   useEffect(() => {
     (async () => {
@@ -21,7 +42,6 @@ export const StartScreen = ({ route }) => {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      console.log({ location });
       setLocation(location);
     })();
   }, []);
@@ -83,6 +103,9 @@ export const StartScreen = ({ route }) => {
         <Text style={textStyles.oxygenRegLight18}>
           Distance from next checkpoint:
           {location ? distance : null}m
+        </Text>
+        <Text style={textStyles.oxygenRegLight18}>
+          Time: {timeInMinutes}:{secondsRemaining}
         </Text>
       </View>
     </View>

@@ -4,7 +4,10 @@ import { Text, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Input, Button } from "react-native-elements";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import {styles} from '../styles/signInScreen'
+import { styles } from "../styles/signInScreen";
+import { textStyles } from "../styles/textStyles";
+import { buttons } from "../styles/buttons";
+import { globalStyles } from "../styles/globalStyles";
 
 const auth = getAuth();
 
@@ -24,27 +27,31 @@ export default function SignInScreen({ navigation }) {
     try {
       await signInWithEmailAndPassword(auth, userInfo.email, userInfo.password);
     } catch (error) {
-      setUserInfo({ ...userInfo, error: 'Invalid login credentials' });
+      setUserInfo({ ...userInfo, error: "Invalid login credentials" });
     }
   }
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <View style={styles.controls}>
         <Input
+          style={textStyles.oxygenRegLight16}
           placeholder="Email"
           containerStyle={styles.control}
           value={userInfo.email}
           onChangeText={(text) => setUserInfo({ ...userInfo, email: text })}
-          leftIcon={<Icon name="envelope" size={16} />}
+          leftIcon={
+            <Icon name="envelope" style={textStyles.oxygenRegLight16} />
+          }
         />
         <Input
+          style={textStyles.oxygenRegLight16}
           placeholder="Password"
           containerStyle={styles.control}
           value={userInfo.password}
           onChangeText={(text) => setUserInfo({ ...userInfo, password: text })}
           secureTextEntry={true}
-          leftIcon={<Icon name="key" size={16} />}
+          leftIcon={<Icon name="key" style={textStyles.oxygenRegLight16} />}
         />
         {userInfo.error ? (
           <View style={styles.error}>
@@ -56,12 +63,17 @@ export default function SignInScreen({ navigation }) {
           onPress={() => {
             navigation.navigate("Forgot Password");
           }}
-        > Forgot password?</Text>
-        <Button title="Sign in" buttonStyle={styles.control} onPress={signIn} />
-      </View>      
+        >
+          {" "}
+          Forgot password?
+        </Text>
+        <Button
+          title="Sign in"
+          buttonStyle={buttons.purpleBtnSolid}
+          onPress={signIn}
+        />
+      </View>
       <StatusBar style="auto" />
     </View>
   );
 }
-
-

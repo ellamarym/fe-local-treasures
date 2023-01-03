@@ -64,7 +64,7 @@ export default function MapScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <MapView
         showsUserLocation={true}
         showsMyLocationButton={true}

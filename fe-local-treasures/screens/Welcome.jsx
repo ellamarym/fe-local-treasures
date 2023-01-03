@@ -2,24 +2,25 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { View } from "react-native";
 import { Button } from "react-native-elements";
-import {styles} from '../styles/welcome'
+import { globalStyles } from "../styles/globalStyles";
+import { buttons } from "../styles/buttons";
 
 export default function Welcome({ navigation }) {
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <StatusBar style="auto" />
-      <View style={styles.buttons}>
+      <View>
         <Button
           title="Sign In"
-          buttonStyle={styles.button}
+          buttonStyle={buttons.purpleBtnSolid}
           onPress={() => {
             navigation.navigate("Sign In");
           }}
         />
+
         <Button
           title="Sign Up"
-          type="outline"
-          buttonStyle={styles.button}
+          buttonStyle={buttons.purpleBtnBorder}
           onPress={() => {
             navigation.navigate("Sign Up");
           }}
@@ -28,5 +29,3 @@ export default function Welcome({ navigation }) {
     </View>
   );
 }
-
-

@@ -32,10 +32,14 @@ export default function HuntScreen({ route, navigation }) {
             Distance: {hunt.distance} miles
           </Text>
 
-          <Pressable style={buttons.purpleBtnSolid} disabled={!user} onPress={()=> {
-            navigation.navigate("StartHunt", {hunt: hunt})
-          }}>
-            <Text style={textStyles.oxygenRegLight16} >
+          <Pressable
+            style={buttons.purpleBtnSolid}
+            disabled={!user}
+            onPress={() => {
+              navigation.navigate("StartHunt", { hunt: hunt });
+            }}
+          >
+            <Text style={textStyles.oxygenRegLight16}>
               {user ? "Start" : "Log in to start"}
             </Text>
           </Pressable>

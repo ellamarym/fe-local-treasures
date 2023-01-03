@@ -14,12 +14,11 @@ export const FlagQuestions = () => {
   const [countriesLoading, setCountriesLoading] = useState(true);
   const [flagsLoading, setFlagsLoading] = useState(true);
   const [correctAnswerGiven, setCorrectAnswerGiven] = useState(false);
-  const [answerGiven, setAnswerGiven] = useState(false)
-    const [number, setNumber] = useState(0)
-    const [random1, setRandom1] = useState(0)
-    const [random2, setRandom2] = useState(0)
-  
- 
+  const [answerGiven, setAnswerGiven] = useState(false);
+  const [number, setNumber] = useState(0);
+  const [random1, setRandom1] = useState(0);
+  const [random2, setRandom2] = useState(0);
+
   useEffect(() => {
     getAllCountries().then((countries) => {
       setAllCountries(countries);
@@ -31,13 +30,11 @@ export const FlagQuestions = () => {
     });
   }, []);
 
-  
   useEffect(() => {
-    setNumber(Math.floor(Math.random() * 220))
-    setRandom1(Math.floor(Math.random() * 220))
-    setRandom2(Math.floor(Math.random() * 220))
-  }, [answerGiven])
-
+    setNumber(Math.floor(Math.random() * 220));
+    setRandom1(Math.floor(Math.random() * 220));
+    setRandom2(Math.floor(Math.random() * 220));
+  }, [answerGiven]);
 
   let guessArray = [
     allCountries[number],
@@ -47,7 +44,7 @@ export const FlagQuestions = () => {
   guessArray.sort();
 
   const answerChecker = (answer) => {
-    setAnswerGiven(true)
+    setAnswerGiven(true);
     if (answer === allCountries[number]) {
       console.log("correct");
       setCorrectAnswerGiven(true);
@@ -58,19 +55,25 @@ export const FlagQuestions = () => {
     //if correct - action e.g next checkpoint given
   };
 
-  if (answerGiven) { 
-    
+  if (answerGiven) {
     return (
       <View>
-        <Text style={textStyles.oxygenRegLight18}>{correctAnswerGiven ? 'Correct!!!' : 'Incorrect :(' }</Text>
-        <Pressable style={buttons.mustardBtnSolid} onPress={()=> {setAnswerGiven(false), setCorrectAnswerGiven(false)}}><Text>{correctAnswerGiven ? 'Next Checkpoint' : 'New Question' }</Text></Pressable>
+        <Text style={textStyles.oxygenRegLight18}>
+          {correctAnswerGiven ? "Correct!!!" : "Incorrect :("}
+        </Text>
+        <Pressable
+          style={buttons.mustardBtnSolid}
+          onPress={() => {
+            setAnswerGiven(false), setCorrectAnswerGiven(false);
+          }}
+        >
+          <Text>{correctAnswerGiven ? "Next Checkpoint" : "New Question"}</Text>
+        </Pressable>
       </View>
-    ) 
+    );
   } else {
     return (
       <View style={globalStyles.container}>
-        <Text style={textStyles.oxygenRegLight18}>hello</Text>
-
         <SvgUri width={150} height={90} uri={allFlagUrls[number]} />
         <Pressable
           style={buttons.mustardBtnSolid}

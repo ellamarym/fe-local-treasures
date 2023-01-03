@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { Pressable, View, Text } from "react-native";
 import { styles } from "../styles/huntsTable";
 import { globalStyles } from "../styles/globalStyles";
+import { textStyles } from "../styles/textStyles";
 
 export const HuntsTable = ({ navigation }) => {
   const [hunts, setHunts] = useState([]);
@@ -20,21 +21,30 @@ export const HuntsTable = ({ navigation }) => {
   const huntRows = () => {
     return hunts.map((hunt) => {
       return (
-        <DataTable.Row key={hunt._id}>
-          <DataTable.Cell>{hunt.title}</DataTable.Cell>
-          <DataTable.Cell>{hunt.location}</DataTable.Cell>
-          <DataTable.Cell>{hunt.distance}</DataTable.Cell>
+        <DataTable.Row key={hunt.id}>
+          <DataTable.Cell style={styles.widthThree}>
+            <Text style={textStyles.oxygenRegLight14}>{hunt.title}</Text>
+          </DataTable.Cell>
+          <DataTable.Cell style={styles.widthTwo}>
+            <Text style={textStyles.oxygenRegLight14}>{hunt.location}</Text>
+          </DataTable.Cell>
+          <DataTable.Cell style={styles.widthOne}>
+            <Text style={textStyles.oxygenRegLight14}>{hunt.distance}</Text>
+          </DataTable.Cell>
+
           <DataTable.Cell
+            style={styles.widthOne}
             onPress={() => {
               navigation.navigate("Hunt", {
-                id: hunt.title,
-                title: hunt.title,
-                location: hunt.location,
-                distance: hunt.distance,
+                id: hunt.id,
               });
             }}
           >
-            <Icon name="arrow-right"></Icon>
+            <Icon
+              style={styles.arrow}
+              name="arrow-circle-right"
+              size={16}
+            ></Icon>
           </DataTable.Cell>
         </DataTable.Row>
       );
@@ -45,10 +55,16 @@ export const HuntsTable = ({ navigation }) => {
     <View style={styles.view}>
       <DataTable>
         <DataTable.Header>
-          <DataTable.Title>Title</DataTable.Title>
-          <DataTable.Title>Location</DataTable.Title>
-          <DataTable.Title>Distance</DataTable.Title>
-          <DataTable.Title></DataTable.Title>
+          <DataTable.Title style={styles.widthThree}>
+            <Text style={textStyles.oxygenRegLight14}>Title</Text>
+          </DataTable.Title>
+          <DataTable.Title style={styles.widthTwo}>
+            <Text style={textStyles.oxygenRegLight14}>Location</Text>
+          </DataTable.Title>
+          <DataTable.Title style={styles.widthOne}>
+            <Text style={textStyles.oxygenRegLight14}>Distance</Text>
+          </DataTable.Title>
+          <DataTable.Title style={styles.widthOne}></DataTable.Title>
         </DataTable.Header>
 
         {isLoading ? null : huntRows()}

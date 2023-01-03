@@ -26,33 +26,6 @@ export default function MapScreen({ navigation }) {
     });
   }, []);
 
-  const huntMarkers = () => {
-    return hunts.map((hunt) => (
-      <Marker
-        key={hunt._id}
-        coordinate={{
-          latitude: hunt.checkpoints[1].lat,
-          longitude: hunt.checkpoints[1].long,
-        }}
-      >
-        <Callout
-          onPress={() =>
-            navigation.navigate("Hunt", {
-              id: hunt.title,
-              title: hunt.title,
-              location: hunt.location,
-              distance: hunt.distance,
-            })
-          }
-          style={styles.callout}
-        >
-          <Text>{hunt.title}</Text>
-          <Icon name="arrow-right" style={styles.calloutIcon}></Icon>
-        </Callout>
-      </Marker>
-    ));
-  };
-
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -66,34 +39,32 @@ export default function MapScreen({ navigation }) {
     })();
   }, []);
 
-  let text = "Waiting..";
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => {}, interval);
-  });
-
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     console.log('Interval triggered')
-  //     console.log(parseFloat(location.coords.latitude));
-  //     location
-  //     ? setRegion({
-  //         latitude: parseFloat(location.coords.latitude),
-  //         longitude: parseFloat(location.coords.longitude),
-  //         latitudeDelta: 0.05,
-  //         longitudeDelta: 0.05,
-  //       }) : {};
-  //   }, 1000);
-  //   return () => clearInterval(interval.coords);
-  // }, []);
+  const huntMarkers = () => {
+    return hunts.map((hunt) => (
+      <Marker
+        key={hunt.id}
+        coordinate={{
+          latitude: hunt.startPoint.lat,
+          longitude: hunt.startPoint.long,
+        }}
+      >
+        <Callout
+          onPress={() =>
+            navigation.navigate("Hunt", {
+              id: hunt.id,
+            })
+          }
+          style={styles.callout}
+        >
+          <Text>{hunt.title}</Text>
+          <Icon name="arrow-right" style={styles.calloutIcon}></Icon>
+        </Callout>
+      </Marker>
+    ));
+  };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <MapView
         showsUserLocation={true}
         showsMyLocationButton={true}

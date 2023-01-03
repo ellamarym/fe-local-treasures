@@ -1,11 +1,6 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
   error: {
     color: "red",
     alignItems: "center",
@@ -19,7 +14,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   forgotPassNav: {
-    fontWeight: "bold",
+    color: "#e7eef5",
+    fontWeight: "normal",
+    textDecorationLine: "underline",
     textAlign: "center",
     marginTop: 10,
     marginBottom: 10,

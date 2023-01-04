@@ -14,6 +14,9 @@ export const FlagQuestions = ({
   currentCheckpoint,
   setCurrentCheckpoint,
   setIsActive,
+  inRange,
+  setInRange,
+  distance,
 }) => {
   const [allCountries, setAllCountries] = useState([]);
   const [allFlagUrls, setAllFlagUrls] = useState([]);
@@ -54,6 +57,7 @@ export const FlagQuestions = ({
     setAnswerGiven(true);
     if (answer === allCountries[number]) {
       setCorrectAnswerGiven(true);
+      setInRange(false)
     } else {
     }
     //style change for correct or incorrect
@@ -68,6 +72,16 @@ export const FlagQuestions = ({
     }
   }, [currentCheckpoint]);
 
+  if (!distance) {
+    return (
+      <View>
+        <Text style={textStyles.oxygenRegLight18}>
+          Loading
+        </Text>
+      </View>
+    )
+  }
+
   if (isGameOver) {
     return (
       <View>
@@ -76,7 +90,18 @@ export const FlagQuestions = ({
     );
   }
 
-  if (answerGiven) {
+  if (!inRange) {
+    return (
+      <View>
+        <Text style={textStyles.oxygenRegLight18}>
+          Continue to next checkpoint
+        </Text>
+      </View>
+    )
+  }
+
+  if (answerGiven && inRange) {
+    // console.log('answer givennnnnnn');
     return (
       <View>
         <Text style={textStyles.oxygenRegLight18}>
@@ -96,7 +121,8 @@ export const FlagQuestions = ({
         </Pressable>
       </View>
     );
-  } else {
+  } else if (inRange) {
+    // console.log('in range but no answerrrrrrrrrrrrr');
     return (
       <View style={questionStyles.container}>
         <Text style={textStyles.oxygenBoldLight18}>Whose flag is this?</Text>

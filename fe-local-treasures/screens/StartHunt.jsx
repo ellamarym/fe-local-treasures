@@ -15,7 +15,13 @@ export const StartScreen = ({ route, navigation }) => {
   const [distance, setDistance] = useState(null);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(true);
+  const [inRange, setInRange] = useState(false);
   const totalCheckpoints = Object.keys(hunt.checkpoints).length;
+
+  useEffect(() => {
+    setDistance(null);
+    setInRange(false)
+  }, [currentCheckpoint]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -43,17 +49,21 @@ export const StartScreen = ({ route, navigation }) => {
           : null;
         const roundedDistance = Math.round(currentDistance);
         setDistance(roundedDistance);
+        if (distance < 100 && distance) {
+          console.log(distance);
+
+          setInRange(true);
+          console.log('in distance ifffffffffffff');
+          console.log(inRange);
+        }
       } else if (!isActive && seconds !== 0) {
         clearInterval(interval);
       }
+      
     }, 1000);
 
     return () => clearInterval(interval);
   }, [isActive, seconds]);
-
-  useEffect(() => {
-    setDistance(null);
-  }, [currentCheckpoint]);
 
   const formatTime = (secs) => {
     var hours = Math.floor(secs / 3600);
@@ -145,6 +155,7 @@ export const StartScreen = ({ route, navigation }) => {
             <Text style={textStyles.oxygenRegLight16}>Time</Text>
             <Text style={textStyles.oxygenBoldLight24}>
               {formatTime(seconds)}
+            <Text style={textStyles.oxygenRegLight16}>Z: {inRange}</Text>
             </Text>
           </View>
         </View>
@@ -153,6 +164,9 @@ export const StartScreen = ({ route, navigation }) => {
           currentCheckpoint,
           setCurrentCheckpoint,
           setIsActive,
+          inRange,
+          setInRange,
+          distance
         })}
       </View>
     </ScrollView>

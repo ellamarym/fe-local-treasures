@@ -1,60 +1,23 @@
 import React from "react";
-import { useAuthentication } from "../utils/hooks/useAuthentication";
-import UserStack from "./UserStack";
-import AuthStack from "./AuthStack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import HomeStack from "./HomeStack";
-import Icon from "react-native-vector-icons/FontAwesome";
+import HomeTabs from "./HomeTabs";
 import { customTheme } from "../styles/customTheme";
-import { globalStyles } from "../styles/globalStyles";
-import { textStyles } from "../styles/textStyles";
+import { StartScreen } from "../screens/StartHunt";
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 export default function RootNavigation() {
-  const { user } = useAuthentication();
-
   return (
     <NavigationContainer theme={customTheme}>
-      <Tab.Navigator
+      <Stack.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarLabelPosition: "beside-icon",
         }}
       >
-        <Tab.Screen
-          name="Hunts"
-          component={HomeStack}
-          options={{
-            tabBarIcon: () => (
-              <Icon name="map" style={textStyles.oxygenRegLight16} />
-            ),
-          }}
-        ></Tab.Screen>
-        {user ? (
-          <Tab.Screen
-            name="Profile"
-            component={UserStack}
-            options={{
-              tabBarIcon: () => (
-                <Icon name="user" style={textStyles.oxygenRegLight16} />
-              ),
-            }}
-          ></Tab.Screen>
-        ) : (
-          <Tab.Screen
-            name="Log in"
-            component={AuthStack}
-            options={{
-              tabBarLabel: "Log in",
-              tabBarIcon: () => (
-                <Icon name="user" style={textStyles.oxygenRegLight16} />
-              ),
-            }}
-          ></Tab.Screen>
-        )}
-      </Tab.Navigator>
+        <Stack.Screen name="Home" component={HomeTabs} />
+        <Stack.Screen name="StartHunt" component={StartScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

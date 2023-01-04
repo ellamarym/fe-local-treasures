@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Alert, Pressable, ScrollView, Text, View } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { styles } from "../styles/startHunt";
 import { textStyles } from "../styles/textStyles";
 import * as Location from "expo-location";
 import haversine from "haversine-distance";
 import { FlagQuestions } from "../utils/questions";
+import { globalStyles } from "../styles/globalStyles";
+import { buttons } from "../styles/buttons";
+import Icon from "react-native-vector-icons/FontAwesome";
 
-export const StartScreen = ({ route }) => {
+export const StartScreen = ({ route, navigation }) => {
   const { hunt } = route.params;
   const [currentCheckpoint, setCurrentCheckpoint] = useState(1);
   const [location, setLocation] = useState(null);
@@ -105,6 +108,33 @@ export const StartScreen = ({ route }) => {
         >
           {huntMarkers()}
         </MapView>
+        <View style={globalStyles.switchButtonCenter}>
+          <Pressable
+            style={buttons.exitBtnSolid}
+            onPress={() => {
+              Alert.alert(
+                "Exit",
+                "Exiting will lose all your progress. Are you sure?",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => {},
+                  },
+                  {
+                    title: "OK",
+                    onPress: () => {
+                      navigation.navigate("Home");
+                    },
+                  },
+                ],
+                { cancelable: true }
+              );
+            }}
+          >
+            <Text style={textStyles.oxygenRegLight16}>Exit</Text>
+            <Icon name="close" style={styles.calloutIcon}></Icon>
+          </Pressable>
+        </View>
         <View>
           <Text style={textStyles.oxygenRegLight18}>
             Distance from next checkpoint:

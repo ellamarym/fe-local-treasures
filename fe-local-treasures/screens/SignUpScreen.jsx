@@ -134,7 +134,7 @@ export default function SignUpScreen({ navigation }) {
             buttonStyle={buttons.purpleBtnBorder}
             onPress={pickImageAsync}
           ></Button>
-          <Text>{console.log("selectedImage", selectedImage)}</Text>
+
           {userInfo.error ? (
             <View style={styles.error}>
               <Text style={styles.error}>{userInfo.error}</Text>

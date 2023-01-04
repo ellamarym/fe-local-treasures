@@ -4,10 +4,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    paddingBottom: 150,
   },
   map: {
     width: "100%",
-    height: "60%",
+    height: 300,
   },
   callout: {
     padding: 5,

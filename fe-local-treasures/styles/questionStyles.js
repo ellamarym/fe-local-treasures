@@ -7,6 +7,16 @@ const questionStyles = StyleSheet.create({
     justifyContent: "center",
   },
   controls: { marginTop: 40, marginBottom: 200 },
+
+  flagContainer: {
+    flex: 1,
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 20,
+    width: 300,
+    height: 150,
+  },
 });
 
 export { questionStyles };

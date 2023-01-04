@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { globalStyles } from "../styles/globalStyles";
 import { getAllCountries, getAllFlagUrls } from "./api/huntApi";
 import { styles } from "../styles/home";
@@ -7,6 +7,7 @@ import SvgExternal from "./SvgExternal";
 import { textStyles } from "../styles/textStyles";
 import { SvgUri } from "react-native-svg";
 import { buttons } from "../styles/buttons";
+import { questionStyles } from "../styles/questionStyles";
 
 export const FlagQuestions = () => {
   const [allCountries, setAllCountries] = useState([]);
@@ -73,31 +74,37 @@ export const FlagQuestions = () => {
     );
   } else {
     return (
-      <View style={globalStyles.container}>
-        <SvgUri width={150} height={90} uri={allFlagUrls[number]} />
+      <View style={questionStyles.container} paddingVertical={50}>
+        <Text style={textStyles.oxygenBoldLight18}>Whose flag is this?</Text>
+        <SvgUri
+          width={150}
+          height={90}
+          marginVertical={20}
+          uri={allFlagUrls[number]}
+        />
         <Pressable
-          style={buttons.mustardBtnSolid}
+          style={buttons.questionBtnSolid}
           onPress={() => {
             answerChecker(guessArray[0]);
           }}
         >
-          <Text>{guessArray[0]}</Text>
+          <Text style={textStyles.oxygenRegDark14}>{guessArray[0]}</Text>
         </Pressable>
         <Pressable
-          style={buttons.mustardBtnSolid}
+          style={buttons.questionBtnSolid}
           onPress={() => {
             answerChecker(guessArray[1]);
           }}
         >
-          <Text>{guessArray[1]}</Text>
+          <Text style={textStyles.oxygenRegDark14}>{guessArray[1]}</Text>
         </Pressable>
         <Pressable
-          style={buttons.mustardBtnSolid}
+          style={buttons.questionBtnSolid}
           onPress={() => {
             answerChecker(guessArray[2]);
           }}
         >
-          <Text>{guessArray[2]}</Text>
+          <Text style={textStyles.oxygenRegDark14}>{guessArray[2]}</Text>
         </Pressable>
       </View>
     );

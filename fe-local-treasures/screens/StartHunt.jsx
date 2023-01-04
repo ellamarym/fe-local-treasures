@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { styles } from "../styles/startHunt";
 import { textStyles } from "../styles/textStyles";
@@ -90,30 +90,32 @@ export const StartScreen = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <MapView
-        showsUserLocation={true}
-        showsMyLocationButton={true}
-        style={styles.map}
-        initialRegion={{
-          latitude: hunt.checkpoints[1].lat,
-          longitude: hunt.checkpoints[1].long,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
-        }}
-      >
-        {huntMarkers()}
-      </MapView>
-      <View>
-        <Text style={textStyles.oxygenRegLight18}>
-          Distance from next checkpoint:
-          {location ? distance : null}m
-        </Text>
-        <Text style={textStyles.oxygenRegLight18}>
-          Time: {timeInMinutes}:{secondsRemaining}
-        </Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <MapView
+          showsUserLocation={true}
+          showsMyLocationButton={true}
+          style={styles.map}
+          initialRegion={{
+            latitude: hunt.checkpoints[1].lat,
+            longitude: hunt.checkpoints[1].long,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+          }}
+        >
+          {huntMarkers()}
+        </MapView>
+        <View>
+          <Text style={textStyles.oxygenRegLight18}>
+            Distance from next checkpoint:
+            {location ? distance : null}m
+          </Text>
+          <Text style={textStyles.oxygenRegLight18}>
+            Time: {timeInMinutes}:{secondsRemaining}
+          </Text>
+        </View>
+        {FlagQuestions()}
       </View>
-      {FlagQuestions()}
-    </View>
+    </ScrollView>
   );
 };

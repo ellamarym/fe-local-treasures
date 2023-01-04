@@ -33,13 +33,13 @@ export default function HuntScreen({ route, navigation }) {
           </Text>
 
           <Pressable
-            style={buttons.purpleBtnSolid}
+            style={buttons.mustardBtnSolid}
             disabled={!user}
             onPress={() => {
               navigation.navigate("StartHunt", { hunt: hunt });
             }}
           >
-            <Text style={textStyles.oxygenRegLight16}>
+            <Text style={textStyles.oxygenRegDark16}>
               {user ? "Start" : "Log in to start"}
             </Text>
           </Pressable>

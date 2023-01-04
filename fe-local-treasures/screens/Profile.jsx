@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { signOut } from "firebase/auth";
 import React from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { Button } from "react-native-elements";
 import { useAuthentication } from "../utils/hooks/useAuthentication";
 import { getAuth } from "firebase/auth";
@@ -17,11 +17,15 @@ export default function ProfileScreen() {
   return (
     <View style={globalStyles.container}>
       <Text style={textStyles.oxygenRegLight18}>Welcome {user?.email}!</Text>
-      <Button
-        title="Sign out"
+
+      <Pressable
         style={buttons.purpleBtnSolid}
+        width={150}
         onPress={() => signOut(auth)}
-      />
+      >
+        <Text style={textStyles.oxygenRegLight16}>Sign out</Text>
+      </Pressable>
+
       <StatusBar style="auto" />
     </View>
   );

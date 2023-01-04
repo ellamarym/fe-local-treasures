@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert, Pressable, Text, View } from "react-native";
+import { Alert, Pressable, ScrollView, Text, View } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { styles } from "../styles/startHunt";
 import { textStyles } from "../styles/textStyles";
@@ -93,57 +93,59 @@ export const StartScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <MapView
-        showsUserLocation={true}
-        showsMyLocationButton={true}
-        style={styles.map}
-        initialRegion={{
-          latitude: hunt.checkpoints[1].lat,
-          longitude: hunt.checkpoints[1].long,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
-        }}
-      >
-        {huntMarkers()}
-      </MapView>
-      <View style={globalStyles.switchButtonCenter}>
-        <Pressable
-          style={buttons.exitBtnSolid}
-          onPress={() => {
-            Alert.alert(
-              "Exit",
-              "Exiting will lose all your progress. Are you sure?",
-              [
-                {
-                  text: "Cancel",
-                  onPress: () => {},
-                },
-                {
-                  title: "OK",
-                  onPress: () => {
-                    navigation.navigate("Home");
-                  },
-                },
-              ],
-              { cancelable: true }
-            );
+    <ScrollView>
+      <View style={styles.container}>
+        <MapView
+          showsUserLocation={true}
+          showsMyLocationButton={true}
+          style={styles.map}
+          initialRegion={{
+            latitude: hunt.checkpoints[1].lat,
+            longitude: hunt.checkpoints[1].long,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
           }}
         >
-          <Text style={textStyles.oxygenRegLight16}>Exit</Text>
-          <Icon name="close" style={styles.calloutIcon}></Icon>
-        </Pressable>
+          {huntMarkers()}
+        </MapView>
+        <View style={globalStyles.switchButtonCenter}>
+          <Pressable
+            style={buttons.exitBtnSolid}
+            onPress={() => {
+              Alert.alert(
+                "Exit",
+                "Exiting will lose all your progress. Are you sure?",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => {},
+                  },
+                  {
+                    title: "OK",
+                    onPress: () => {
+                      navigation.navigate("Home");
+                    },
+                  },
+                ],
+                { cancelable: true }
+              );
+            }}
+          >
+            <Text style={textStyles.oxygenRegLight16}>Exit</Text>
+            <Icon name="close" style={styles.calloutIcon}></Icon>
+          </Pressable>
+        </View>
+        <View>
+          <Text style={textStyles.oxygenRegLight18}>
+            Distance from next checkpoint:
+            {location ? distance : null}m
+          </Text>
+          <Text style={textStyles.oxygenRegLight18}>
+            Time: {timeInMinutes}:{secondsRemaining}
+          </Text>
+        </View>
+        {FlagQuestions()}
       </View>
-      <View>
-        <Text style={textStyles.oxygenRegLight18}>
-          Distance from next checkpoint:
-          {location ? distance : null}m
-        </Text>
-        <Text style={textStyles.oxygenRegLight18}>
-          Time: {timeInMinutes}:{secondsRemaining}
-        </Text>
-      </View>
-      {FlagQuestions()}
-    </View>
+    </ScrollView>
   );
 };

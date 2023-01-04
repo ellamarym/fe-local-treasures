@@ -28,6 +28,15 @@ const buttons = StyleSheet.create({
     justifyContent: "center",
   },
 
+  questionBtnSolid: {
+    paddingVertical: 8,
+    width: 200,
+    marginVertical: 12,
+    borderRadius: 50,
+    backgroundColor: "#EAAA00",
+    justifyContent: "center",
+  },
+
   correctBtnSolid: {
     paddingVertical: 12,
     paddingHorizontal: 60,

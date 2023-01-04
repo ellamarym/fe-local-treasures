@@ -8,6 +8,12 @@ const textStyles = StyleSheet.create({
     alignSelf: "center",
   },
 
+  oxygenBoldLight24: {
+    fontFamily: "OxygenBold",
+    color: "#e7eef5",
+    fontSize: 24,
+    alignSelf: "center",
+  },
   oxygenBoldLight18: {
     fontFamily: "OxygenBold",
     color: "#e7eef5",

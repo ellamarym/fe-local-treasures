@@ -80,7 +80,7 @@ export const FlagQuestions = ({
     return (
       <View>
         <Text style={textStyles.oxygenRegLight18}>
-          {correctAnswerGiven ? "Correct!!!" : "Incorrect :("}
+          {correctAnswerGiven ? "Correct!" : "Incorrect"}
         </Text>
         <Pressable
           style={buttons.mustardBtnSolid}

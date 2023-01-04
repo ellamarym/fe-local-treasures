@@ -12,60 +12,59 @@ import { buttons } from "../styles/buttons";
 export const StartScreen = ({ route, navigation }) => {
   const { hunt } = route.params;
   const [currentCheckpoint, setCurrentCheckpoint] = useState(1);
-  const [location, setLocation] = useState(null);
   const [distance, setDistance] = useState(null);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(true);
   const totalCheckpoints = Object.keys(hunt.checkpoints).length;
 
   useEffect(() => {
-    let interval = null;
-    if (isActive) {
-      interval = setInterval(() => {
-        setSeconds((seconds) => seconds + 1);
-      }, 1000);
-    } else if (!isActive && seconds !== 0) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [isActive, seconds]);
-
-  const timeInMinutes = Math.floor(seconds / 60);
-  const secondsRemaining = seconds % 60;
-
-  useEffect(() => {
     const interval = setInterval(async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
+
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    }, 2000);
+      if (isActive) {
+        setSeconds((seconds) => seconds + 1);
+        let location = await Location.getCurrentPositionAsync({});
+        const currentDistance = location
+          ? haversine(
+              {
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+              },
+              {
+                latitude: hunt.checkpoints[currentCheckpoint].lat,
+                longitude: hunt.checkpoints[currentCheckpoint].long,
+              }
+            )
+          : null;
+        const roundedDistance = Math.round(currentDistance);
+        setDistance(roundedDistance);
+      } else if (!isActive && seconds !== 0) {
+        clearInterval(interval);
+      }
+    }, 1000);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [isActive, seconds]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const currentDistance = location
-        ? haversine(
-            {
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-            },
-            {
-              latitude: hunt.checkpoints[currentCheckpoint].lat,
-              longitude: hunt.checkpoints[currentCheckpoint].long,
-            }
-          )
-        : null;
-      const roundedDistance = Math.round(currentDistance);
-      setDistance(roundedDistance);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, [location]);
+    setDistance(null);
+  }, [currentCheckpoint]);
+
+  const formatTime = (secs) => {
+    var hours = Math.floor(secs / 3600);
+    var minutes = Math.floor(secs / 60) % 60;
+    var seconds = secs % 60;
+
+    return [hours, minutes, seconds]
+      .map((el) => (el < 10 ? "0" + el : el))
+      .filter((el, i) => el !== "00" || i > 0)
+      .join(":");
+  };
 
   const huntMarkers = () => {
     const markers = [];
@@ -129,17 +128,25 @@ export const StartScreen = ({ route, navigation }) => {
             <Text style={textStyles.oxygenRegLight16}>Exit</Text>
           </Pressable>
         </View>
-        <View>
-          <Text style={textStyles.oxygenRegLight18}>
-            Distance from next checkpoint: {location ? distance : null}m
-          </Text>
-          <Text style={textStyles.oxygenRegLight18}>
-            Time: {timeInMinutes}:{secondsRemaining}
-          </Text>
-          <Text style={textStyles.oxygenRegLight18}>
-            Checkpoint {currentCheckpoint} of{" "}
-            {Object.keys(hunt.checkpoints).length}
-          </Text>
+        <View style={styles.statsContainer}>
+          <View style={styles.stats}>
+            <Text style={textStyles.oxygenRegLight16}>Checkpoint</Text>
+            <Text style={textStyles.oxygenBoldLight24}>
+              {currentCheckpoint} of {totalCheckpoints}
+            </Text>
+          </View>
+          <View style={styles.stats}>
+            <Text style={textStyles.oxygenRegLight16}>Next Stop</Text>
+            <Text style={textStyles.oxygenBoldLight24}>
+              {distance ? distance : "- "}m
+            </Text>
+          </View>
+          <View style={styles.stats}>
+            <Text style={textStyles.oxygenRegLight16}>Time</Text>
+            <Text style={textStyles.oxygenBoldLight24}>
+              {formatTime(seconds)}
+            </Text>
+          </View>
         </View>
         {FlagQuestions({
           totalCheckpoints,

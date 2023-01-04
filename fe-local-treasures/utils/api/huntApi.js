@@ -20,21 +20,33 @@ export const fetchHuntById = (id) => {
 };
 
 export const getAllCountries = () => {
-  return countriesAPI.get("/flag/images").then((response) => {
-    return response.data.data.map((country) => {
-      return country.name;
+  return countriesAPI
+    .get("/flag/images")
+    .then((response) => {
+      return response.data.data.map((country) => {
+        return country.name;
+      });
+    })
+    .catch((err) => {
+      return { error: err.response.data.msg };
     });
-  }).catch((err) => {
-      return {error: err.response.data.msg}
-   });
 };
 
 export const getAllFlagUrls = () => {
-  return countriesAPI.get("/flag/images").then((response) => {
-    return response.data.data.map((country) => {
-      return country.flag;
+  return countriesAPI
+    .get("/flag/images")
+    .then((response) => {
+      return response.data.data.map((country) => {
+        return country.flag;
+      });
+    })
+    .catch((err) => {
+      return { error: err.response.data.msg };
     });
-  }).catch((err) => {
-      return {error: err.response.data.msg}
-   });
+};
+
+export const getAllCapitals = () => {
+  return axios.get("https://restcountries.com/v2/all").then((response) => {
+    return response.data;
+  });
 };

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { globalStyles } from "../styles/globalStyles";
-import { getAllCountries, getAllFlagUrls } from "./api/huntApi";
+import { getAllCapitals, getAllCountries, getAllFlagUrls } from "./api/huntApi";
 import { styles } from "../styles/home";
 import SvgExternal from "./SvgExternal";
 import { textStyles } from "../styles/textStyles";
@@ -15,44 +15,44 @@ export const FlagQuestions = ({
   setCurrentCheckpoint,
   setIsActive,
 }) => {
-  const [allCountries, setAllCountries] = useState([]);
-  const [allFlagUrls, setAllFlagUrls] = useState([]);
-  const [countriesLoading, setCountriesLoading] = useState(true);
-  const [flagsLoading, setFlagsLoading] = useState(true);
   const [correctAnswerGiven, setCorrectAnswerGiven] = useState(false);
   const [answerGiven, setAnswerGiven] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [number, setNumber] = useState(0);
   const [random1, setRandom1] = useState(0);
   const [random2, setRandom2] = useState(0);
+  const [allCapitals, setAllCapitals] = useState([]);
 
   useEffect(() => {
-    getAllCountries().then((countries) => {
-      setAllCountries(countries);
-      setCountriesLoading(false);
-    });
-    getAllFlagUrls().then((flags) => {
-      setAllFlagUrls(flags);
-      setFlagsLoading(false);
+    getAllCapitals().then((capitals) => {
+      setAllCapitals(capitals);
     });
   }, []);
 
   useEffect(() => {
-    setNumber(Math.floor(Math.random() * 220));
-    setRandom1(Math.floor(Math.random() * 220));
-    setRandom2(Math.floor(Math.random() * 220));
+    setNumber(Math.floor(Math.random() * 250));
+    setRandom1(Math.floor(Math.random() * 250));
+    setRandom2(Math.floor(Math.random() * 250));
   }, [answerGiven]);
 
-  let guessArray = [
-    allCountries[number],
-    allCountries[random1],
-    allCountries[random2],
+  const capitals = allCapitals.map((country) => {
+    return country.capital;
+  });
+  const countries = allCapitals.map((country) => {
+    return country.name;
+  });
+
+  let multipleChoice = [
+    countries[number],
+    countries[random1],
+    countries[random2],
   ];
-  guessArray.sort();
+
+  multipleChoice.sort();
 
   const answerChecker = (answer) => {
     setAnswerGiven(true);
-    if (answer === allCountries[number]) {
+    if (answer === countries[number]) {
       setCorrectAnswerGiven(true);
     } else {
     }
@@ -99,36 +99,33 @@ export const FlagQuestions = ({
   } else {
     return (
       <View style={questionStyles.container}>
-        <Text style={textStyles.oxygenBoldLight18}>Whose flag is this?</Text>
-        <SvgUri
-          width={150}
-          height={90}
-          marginVertical={20}
-          uri={allFlagUrls[number]}
-        />
+        <Text style={textStyles.oxygenBoldLight18}>What country?</Text>
+
+        <Text style={textStyles.oxygenRegLight18}>{capitals[number]}</Text>
+
         <Pressable
           style={buttons.questionBtnSolid}
           onPress={() => {
-            answerChecker(guessArray[0]);
+            answerChecker(multipleChoice[0]);
           }}
         >
-          <Text style={textStyles.oxygenRegDark14}>{guessArray[0]}</Text>
+          <Text style={textStyles.oxygenRegDark14}>{multipleChoice[0]}</Text>
         </Pressable>
         <Pressable
           style={buttons.questionBtnSolid}
           onPress={() => {
-            answerChecker(guessArray[1]);
+            answerChecker(multipleChoice[1]);
           }}
         >
-          <Text style={textStyles.oxygenRegDark14}>{guessArray[1]}</Text>
+          <Text style={textStyles.oxygenRegDark14}>{multipleChoice[1]}</Text>
         </Pressable>
         <Pressable
           style={buttons.questionBtnSolid}
           onPress={() => {
-            answerChecker(guessArray[2]);
+            answerChecker(multipleChoice[2]);
           }}
         >
-          <Text style={textStyles.oxygenRegDark14}>{guessArray[2]}</Text>
+          <Text style={textStyles.oxygenRegDark14}>{multipleChoice[2]}</Text>
         </Pressable>
       </View>
     );

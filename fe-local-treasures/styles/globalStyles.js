@@ -21,6 +21,11 @@ const globalStyles = StyleSheet.create({
     bottom: "0%",
     alignSelf: "center",
   },
+  switchButtonCenter: {
+    position: "absolute",
+    bottom: "40%",
+    alignSelf: "center",
+  },
 });
 
 export { globalStyles };

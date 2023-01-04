@@ -45,6 +45,14 @@ const buttons = StyleSheet.create({
     backgroundColor: "grey",
     justifyContent: "center",
   },
+  exitBtnSolid: {
+    paddingVertical: 12,
+    marginVertical: 10,
+    borderRadius: 50,
+    backgroundColor: "#B43D50",
+    justifyContent: "center",
+    width: 60,
+  },
 });
 
 export { buttons };

@@ -74,7 +74,7 @@ export const FlagQuestions = () => {
     );
   } else {
     return (
-      <View style={questionStyles.container} paddingVertical={50}>
+      <View style={questionStyles.container}>
         <Text style={textStyles.oxygenBoldLight18}>Whose flag is this?</Text>
         <SvgUri
           width={150}

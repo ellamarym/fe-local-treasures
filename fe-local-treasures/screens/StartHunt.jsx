@@ -8,7 +8,6 @@ import haversine from "haversine-distance";
 import { FlagQuestions } from "../utils/questions";
 import { globalStyles } from "../styles/globalStyles";
 import { buttons } from "../styles/buttons";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 export const StartScreen = ({ route, navigation }) => {
   const { hunt } = route.params;
@@ -17,10 +16,7 @@ export const StartScreen = ({ route, navigation }) => {
   const [distance, setDistance] = useState(null);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(true);
-
-  function toggle() {
-    setIsActive(!isActive);
-  }
+  const totalCheckpoints = Object.keys(hunt.checkpoints).length;
 
   useEffect(() => {
     let interval = null;
@@ -81,7 +77,6 @@ export const StartScreen = ({ route, navigation }) => {
             latitude: hunt.checkpoints[i].lat,
             longitude: hunt.checkpoints[i].long,
           }}
-          pinColor={i === currentCheckpoint ? "red" : "green"}
         >
           <Callout style={styles.callout}>
             <Text>{`Checkpoint ${i}`}</Text>
@@ -132,19 +127,26 @@ export const StartScreen = ({ route, navigation }) => {
             }}
           >
             <Text style={textStyles.oxygenRegLight16}>Exit</Text>
-            <Icon name="close" style={styles.calloutIcon}></Icon>
           </Pressable>
         </View>
         <View>
           <Text style={textStyles.oxygenRegLight18}>
-            Distance from next checkpoint:
-            {location ? distance : null}m
+            Distance from next checkpoint: {location ? distance : null}m
           </Text>
           <Text style={textStyles.oxygenRegLight18}>
             Time: {timeInMinutes}:{secondsRemaining}
           </Text>
+          <Text style={textStyles.oxygenRegLight18}>
+            Checkpoint {currentCheckpoint} of{" "}
+            {Object.keys(hunt.checkpoints).length}
+          </Text>
         </View>
-        {FlagQuestions()}
+        {FlagQuestions({
+          totalCheckpoints,
+          currentCheckpoint,
+          setCurrentCheckpoint,
+          setIsActive,
+        })}
       </View>
     </ScrollView>
   );

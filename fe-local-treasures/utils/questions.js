@@ -8,13 +8,19 @@ import { textStyles } from "../styles/textStyles";
 import { SvgUri } from "react-native-svg";
 import { buttons } from "../styles/buttons";
 
-export const FlagQuestions = () => {
+export const FlagQuestions = ({
+  totalCheckpoints,
+  currentCheckpoint,
+  setCurrentCheckpoint,
+  setIsActive,
+}) => {
   const [allCountries, setAllCountries] = useState([]);
   const [allFlagUrls, setAllFlagUrls] = useState([]);
   const [countriesLoading, setCountriesLoading] = useState(true);
   const [flagsLoading, setFlagsLoading] = useState(true);
   const [correctAnswerGiven, setCorrectAnswerGiven] = useState(false);
   const [answerGiven, setAnswerGiven] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
   const [number, setNumber] = useState(0);
   const [random1, setRandom1] = useState(0);
   const [random2, setRandom2] = useState(0);
@@ -46,7 +52,6 @@ export const FlagQuestions = () => {
   const answerChecker = (answer) => {
     setAnswerGiven(true);
     if (answer === allCountries[number]) {
-      console.log("correct");
       setCorrectAnswerGiven(true);
     } else {
     }
@@ -54,6 +59,21 @@ export const FlagQuestions = () => {
     //if wrong, disable button and give another change
     //if correct - action e.g next checkpoint given
   };
+
+  useEffect(() => {
+    if (currentCheckpoint === totalCheckpoints) {
+      setIsActive(false);
+      setIsGameOver(true);
+    }
+  }, [currentCheckpoint]);
+
+  if (isGameOver) {
+    return (
+      <View>
+        <Text style={textStyles.oxygenRegLight18}>You win!</Text>
+      </View>
+    );
+  }
 
   if (answerGiven) {
     return (
@@ -64,6 +84,10 @@ export const FlagQuestions = () => {
         <Pressable
           style={buttons.mustardBtnSolid}
           onPress={() => {
+            if (correctAnswerGiven) {
+              setCurrentCheckpoint((curr) => curr + 1);
+            }
+
             setAnswerGiven(false), setCorrectAnswerGiven(false);
           }}
         >

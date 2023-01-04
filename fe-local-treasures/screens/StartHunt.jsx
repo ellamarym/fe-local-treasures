@@ -17,10 +17,7 @@ export const StartScreen = ({ route, navigation }) => {
   const [distance, setDistance] = useState(null);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(true);
-
-  function toggle() {
-    setIsActive(!isActive);
-  }
+  const totalCheckpoints = Object.keys(hunt.checkpoints).length;
 
   useEffect(() => {
     let interval = null;
@@ -81,7 +78,6 @@ export const StartScreen = ({ route, navigation }) => {
             latitude: hunt.checkpoints[i].lat,
             longitude: hunt.checkpoints[i].long,
           }}
-          pinColor={i === currentCheckpoint ? "red" : "green"}
         >
           <Callout style={styles.callout}>
             <Text>{`Checkpoint ${i}`}</Text>
@@ -142,8 +138,17 @@ export const StartScreen = ({ route, navigation }) => {
         <Text style={textStyles.oxygenRegLight18}>
           Time: {timeInMinutes}:{secondsRemaining}
         </Text>
+        <Text style={textStyles.oxygenRegLight18}>
+          checkpoint: {currentCheckpoint}
+          number total: {Object.keys(hunt.checkpoints).length}
+        </Text>
       </View>
-      {FlagQuestions()}
+      {FlagQuestions({
+        totalCheckpoints,
+        currentCheckpoint,
+        setCurrentCheckpoint,
+        setIsActive,
+      })}
     </View>
   );
 };

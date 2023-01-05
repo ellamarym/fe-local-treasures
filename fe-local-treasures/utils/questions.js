@@ -57,7 +57,7 @@ export const FlagQuestions = ({
     setAnswerGiven(true);
     if (answer === countries[number]) {
       setCorrectAnswerGiven(true);
-      setInRange(false)
+      setInRange(false);
     } else {
     }
     //style change for correct or incorrect
@@ -75,11 +75,9 @@ export const FlagQuestions = ({
   if (!distance) {
     return (
       <View>
-        <Text style={textStyles.oxygenRegLight18}>
-          Loading
-        </Text>
+        <Text style={textStyles.oxygenRegLight18}>Loading</Text>
       </View>
-    )
+    );
   }
 
   if (isGameOver) {
@@ -97,7 +95,7 @@ export const FlagQuestions = ({
           Continue to next checkpoint
         </Text>
       </View>
-    )
+    );
   }
 
   if (answerGiven && inRange) {
@@ -124,10 +122,16 @@ export const FlagQuestions = ({
   } else if (inRange) {
     // console.log('in range but no answerrrrrrrrrrrrr');
     return (
-      <View style={questionStyles.container}>
-        <Text style={textStyles.oxygenBoldLight18}>What country?</Text>
-
-        <Text style={textStyles.oxygenRegLight18}>{capitals[number]}</Text>
+      <View style={[questionStyles.container, questionStyles.glowProp]}>
+        <Text style={questionStyles.questionTextCenter}>
+          <Text style={questionStyles.questionTextCapital}>
+            {capitals[number]}
+          </Text>
+          <Text style={questionStyles.questionText}>
+            {" "}
+            is the capital of which country?
+          </Text>
+        </Text>
 
         <Pressable
           style={buttons.questionBtnSolid}

@@ -4,6 +4,7 @@ import { textStyles } from "../../styles/textStyles";
 import { Text, View } from "react-native";
 import { Button, Input } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { buttons } from "../../styles/buttons";
 
 function SigninForm({ userInfo, navigation, setUserInfo, signIn }) {
   return (
@@ -40,7 +41,11 @@ function SigninForm({ userInfo, navigation, setUserInfo, signIn }) {
       >
         Forgot password?
       </Text>
-      <Button title="Sign in" buttonStyle={styles.control} onPress={signIn} />
+      <Button
+        title="Sign in"
+        buttonStyle={buttons.purpleBtnSolid}
+        onPress={signIn}
+      />
     </View>
   );
 }

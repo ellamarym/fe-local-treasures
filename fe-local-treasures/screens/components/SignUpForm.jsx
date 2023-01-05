@@ -1,6 +1,7 @@
 import React from "react";
 import { styles } from "../../styles/signupScreens";
 import { textStyles } from "../../styles/textStyles";
+import { buttons } from "../../styles/buttons";
 import { Text, View } from "react-native";
 import { Button, Input } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -71,7 +72,7 @@ function SignUpForm({ userInfo, setUserInfo, signUp }) {
       ) : null}
       <Button
         title="Sign Up"
-        buttonStyle={styles.control}
+        buttonStyle={buttons.purpleBtnSolid}
         onPress={signUp}
       ></Button>
     </View>

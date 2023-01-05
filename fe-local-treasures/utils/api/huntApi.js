@@ -29,3 +29,9 @@ export const fetchStatsByUser = (user) => {
     return stats
   })
 }
+
+export const postStats= (stats) => {
+  return localTreasuresApi.post(`/stats`, stats).then(({data: response })=> {
+    return response
+  })
+}

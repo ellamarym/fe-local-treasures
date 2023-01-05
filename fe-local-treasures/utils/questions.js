@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
-import { getAllCapitals } from "./api/huntApi";
+import { getAllCapitals, postStats } from "./api/huntApi";
 import { textStyles } from "../styles/textStyles";
 import { SvgUri } from "react-native-svg";
 import { buttons } from "../styles/buttons";
@@ -25,7 +25,7 @@ export const FlagQuestions = ({
   const [random1, setRandom1] = useState(0);
   const [random2, setRandom2] = useState(0);
   const [allCapitals, setAllCapitals] = useState([]);
-
+  const [finalStats, setFinalStats] = useState({})
   useEffect(() => {
     getAllCapitals().then((capitals) => {
       setAllCapitals(capitals);
@@ -79,6 +79,7 @@ export const FlagQuestions = ({
       </View>
     );
   }
+
 
   if (isGameOver) {
     return (

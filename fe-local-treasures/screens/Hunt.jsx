@@ -35,7 +35,7 @@ export default function HuntScreen({ route, navigation }) {
             Location: {hunt.location}
           </Text>
           <Text style={textStyles.oxygenRegLight18}>
-            Distance: {hunt.distance} miles
+            Distance: {hunt.distance} checkpoints
           </Text>
           <View height={20}></View>
           <Pressable

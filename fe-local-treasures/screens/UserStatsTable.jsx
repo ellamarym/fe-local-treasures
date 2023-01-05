@@ -27,7 +27,6 @@ export const UserStatsTable = () => {
           </DataTable.Cell>
           <DataTable.Cell style={styles.widthOneAlignRight}>
             <Text style={textStyles.oxygenRegLight14}>
-              {" "}
               {formatTime(stat.time)}
             </Text>
           </DataTable.Cell>

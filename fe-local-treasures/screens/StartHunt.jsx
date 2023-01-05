@@ -68,8 +68,12 @@ export const StartScreen = ({ route, navigation }) => {
             longitude: hunt.checkpoints[i].long,
           }}
         >
-          <Callout style={styles.callout}>
-            <Text>{`Checkpoint ${i}`}</Text>
+          <Callout tooltip>
+            <View style={buttons.mapCallout}>
+              <Text
+                style={textStyles.oxygenRegDark14}
+              >{`Checkpoint ${i}`}</Text>
+            </View>
           </Callout>
         </Marker>
       );

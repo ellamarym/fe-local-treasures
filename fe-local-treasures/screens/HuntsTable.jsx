@@ -62,7 +62,7 @@ export const HuntsTable = ({ navigation }) => {
             <Text style={textStyles.oxygenRegLight14}>Location</Text>
           </DataTable.Title>
           <DataTable.Title style={styles.widthOne}>
-            <Text style={textStyles.oxygenRegLight14}>Distance</Text>
+            <Text style={textStyles.oxygenRegLight14}>Stops</Text>
           </DataTable.Title>
           <DataTable.Title style={styles.widthOne}></DataTable.Title>
         </DataTable.Header>
@@ -76,7 +76,7 @@ export const HuntsTable = ({ navigation }) => {
             navigation.navigate("Map");
           }}
         >
-          <Text>View Map</Text>
+          <Text style={textStyles.oxygenRegDark16}>View Map</Text>
           <Icon name="map" style={styles.calloutIcon}></Icon>
         </Pressable>
       </View>

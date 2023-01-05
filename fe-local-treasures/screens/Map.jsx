@@ -6,6 +6,8 @@ import MapView, { Marker, Callout, Circle } from "react-native-maps";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { fetchHunts } from "../utils/api/huntApi";
 import * as Location from "expo-location";
+import { buttons } from "../styles/buttons";
+import { textStyles } from "../styles/textStyles";
 
 export default function MapScreen({ navigation }) {
   const [hunts, setHunts] = useState([]);
@@ -49,15 +51,17 @@ export default function MapScreen({ navigation }) {
         }}
       >
         <Callout
+          tooltip
           onPress={() =>
             navigation.navigate("Hunt", {
               id: hunt.id,
             })
           }
-          style={styles.callout}
         >
-          <Text>{hunt.title}</Text>
-          <Icon name="arrow-right" style={styles.calloutIcon}></Icon>
+          <View style={buttons.mapCallout}>
+            <Text style={textStyles.oxygenRegDark14}>{hunt.title}</Text>
+            <Icon name="arrow-right" style={styles.calloutIcon}></Icon>
+          </View>
         </Callout>
       </Marker>
     ));
@@ -96,7 +100,7 @@ export default function MapScreen({ navigation }) {
             navigation.navigate("List");
           }}
         >
-          <Text>View List</Text>
+          <Text style={textStyles.oxygenRegDark16}>View List</Text>
           <Icon name="list" style={styles.calloutIcon}></Icon>
         </Pressable>
       </View>

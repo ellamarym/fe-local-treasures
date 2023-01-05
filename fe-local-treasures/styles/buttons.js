@@ -63,6 +63,17 @@ const buttons = StyleSheet.create({
     justifyContent: "center",
     width: 60,
   },
+  mapCallout: {
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+    marginVertical: 5,
+    borderRadius: 50,
+    backgroundColor: "#EAAA00",
+    justifyContent: "center",
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+  },
 });
 
 export { buttons };

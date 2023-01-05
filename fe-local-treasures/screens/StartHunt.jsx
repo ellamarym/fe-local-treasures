@@ -8,54 +8,45 @@ import haversine from "haversine-distance";
 import { FlagQuestions } from "../utils/questions";
 import { globalStyles } from "../styles/globalStyles";
 import { buttons } from "../styles/buttons";
+import { formatTime } from "../utils/formatTime";
 
 export const StartScreen = ({ route, navigation }) => {
   const { hunt } = route.params;
   const [currentCheckpoint, setCurrentCheckpoint] = useState(1);
   const [distance, setDistance] = useState(null);
+  const [position, setPosition] = useState(null);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(true);
-  const [inRange, setInRange] = useState(false);
   const totalCheckpoints = Object.keys(hunt.checkpoints).length;
 
   useEffect(() => {
-    setDistance(null);
-    setInRange(false);
-  }, [currentCheckpoint]);
+    const currentDistance = position
+      ? haversine(
+          {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          },
+          {
+            latitude: hunt.checkpoints[currentCheckpoint].lat,
+            longitude: hunt.checkpoints[currentCheckpoint].long,
+          }
+        )
+      : null;
+    const roundedDistance = Math.round(currentDistance);
+    setDistance(roundedDistance);
+  }, [currentCheckpoint, position]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-
       if (isActive) {
         setSeconds((seconds) => seconds + 1);
         let location = await Location.getCurrentPositionAsync({});
-        const currentDistance = location
-          ? haversine(
-              {
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-              },
-              {
-                latitude: hunt.checkpoints[currentCheckpoint].lat,
-                longitude: hunt.checkpoints[currentCheckpoint].long,
-              }
-            )
-          : null;
-        const roundedDistance = Math.round(currentDistance);
-        setDistance(roundedDistance);
-        if (distance < 100 && distance) {
-          //console.log(distance);
-
-          setInRange(true);
-          //console.log('in distance ifffffffffffff');
-          //console.log(inRange);
-        }
+        setPosition(() => location);
       } else if (!isActive && seconds !== 0) {
         clearInterval(interval);
       }
@@ -63,17 +54,6 @@ export const StartScreen = ({ route, navigation }) => {
 
     return () => clearInterval(interval);
   }, [isActive, seconds]);
-
-  const formatTime = (secs) => {
-    var hours = Math.floor(secs / 3600);
-    var minutes = Math.floor(secs / 60) % 60;
-    var seconds = secs % 60;
-
-    return [hours, minutes, seconds]
-      .map((el) => (el < 10 ? "0" + el : el))
-      .filter((el, i) => el !== "00" || i > 0)
-      .join(":");
-  };
 
   const huntMarkers = () => {
     const markers = [];
@@ -154,7 +134,6 @@ export const StartScreen = ({ route, navigation }) => {
             <Text style={textStyles.oxygenRegLight16}>Time</Text>
             <Text style={textStyles.oxygenBoldLight24}>
               {formatTime(seconds)}
-              <Text style={textStyles.oxygenRegLight16}>Z: {inRange}</Text>
             </Text>
           </View>
         </View>
@@ -163,9 +142,9 @@ export const StartScreen = ({ route, navigation }) => {
           currentCheckpoint,
           setCurrentCheckpoint,
           setIsActive,
-          inRange,
-          setInRange,
           distance,
+          seconds,
+          navigation,
         })}
       </View>
     </ScrollView>

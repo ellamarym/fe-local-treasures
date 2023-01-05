@@ -86,7 +86,7 @@ export const FlagQuestions = ({
       <View>
         <ConfettiCannon
           count={200}
-          origin={{ x: 0, y: 0 }}
+          origin={{ x: 300, y: -100 }}
           autoStart={true}
           fadeOut={true}
           fallSpeed={5000}

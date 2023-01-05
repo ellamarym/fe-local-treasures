@@ -7,6 +7,12 @@ const textStyles = StyleSheet.create({
     fontSize: 30,
     alignSelf: "center",
   },
+  oxygenBoldLight32: {
+    fontFamily: "OxygenBold",
+    color: "#e7eef5",
+    fontSize: 32,
+    alignSelf: "center",
+  },
 
   oxygenBoldLight24: {
     fontFamily: "OxygenBold",
@@ -16,6 +22,12 @@ const textStyles = StyleSheet.create({
   },
   oxygenBoldLight18: {
     fontFamily: "OxygenBold",
+    color: "#e7eef5",
+    fontSize: 18,
+    alignSelf: "center",
+  },
+  oxygenRegLight24: {
+    fontFamily: "OxygenReg",
     color: "#e7eef5",
     fontSize: 18,
     alignSelf: "center",
@@ -40,6 +52,13 @@ const textStyles = StyleSheet.create({
     color: "#e7eef5",
     fontFamily: "OxygenReg",
     fontSize: 14,
+  },
+
+  oxygenRegDark18: {
+    alignSelf: "center",
+    color: "#000000",
+    fontFamily: "OxygenReg",
+    fontSize: 18,
   },
 
   oxygenRegDark16: {

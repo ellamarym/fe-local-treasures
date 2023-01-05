@@ -1,30 +1,31 @@
 import { useEffect, useState } from "react";
-import { Image, Pressable, ScrollView, Text, View } from "react-native";
-import { globalStyles } from "../styles/globalStyles";
-import { getAllCapitals, getAllCountries, getAllFlagUrls } from "./api/huntApi";
-import { styles } from "../styles/home";
-import SvgExternal from "./SvgExternal";
+import { Pressable, Text, View } from "react-native";
+import { getAllCapitals } from "./api/huntApi";
 import { textStyles } from "../styles/textStyles";
 import { SvgUri } from "react-native-svg";
 import { buttons } from "../styles/buttons";
 import { questionStyles } from "../styles/questionStyles";
+import { formatTime } from "./formatTime";
 
 export const FlagQuestions = ({
   totalCheckpoints,
   currentCheckpoint,
   setCurrentCheckpoint,
   setIsActive,
-  inRange,
-  setInRange,
   distance,
+  seconds,
+  navigation,
 }) => {
   const [correctAnswerGiven, setCorrectAnswerGiven] = useState(false);
   const [answerGiven, setAnswerGiven] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [totalGameTime, setTotalGameTime] = useState(null);
   const [number, setNumber] = useState(0);
   const [random1, setRandom1] = useState(0);
   const [random2, setRandom2] = useState(0);
   const [allCapitals, setAllCapitals] = useState([]);
+
+  const range = 2000;
 
   useEffect(() => {
     getAllCapitals().then((capitals) => {
@@ -57,7 +58,6 @@ export const FlagQuestions = ({
     setAnswerGiven(true);
     if (answer === countries[number]) {
       setCorrectAnswerGiven(true);
-      setInRange(false)
     } else {
     }
     //style change for correct or incorrect
@@ -69,39 +69,48 @@ export const FlagQuestions = ({
     if (currentCheckpoint === totalCheckpoints) {
       setIsActive(false);
       setIsGameOver(true);
+      setTotalGameTime(seconds);
     }
   }, [currentCheckpoint]);
 
   if (!distance) {
     return (
       <View>
-        <Text style={textStyles.oxygenRegLight18}>
-          Loading
-        </Text>
+        <Text style={textStyles.oxygenRegLight18}>Loading...</Text>
       </View>
-    )
+    );
   }
 
   if (isGameOver) {
     return (
       <View>
-        <Text style={textStyles.oxygenRegLight18}>You win!</Text>
+        <Text style={textStyles.oxygenBoldLight32}>Congratulations</Text>
+        <Text style={textStyles.oxygenRegLight24}>
+          You won in {formatTime(totalGameTime)}
+        </Text>
+        <Pressable
+          style={buttons.mustardBtnSolid}
+          onPress={() => {
+            navigation.navigate("Map");
+          }}
+        >
+          <Text style={textStyles.oxygenRegDark16}>{"View Map"}</Text>
+        </Pressable>
       </View>
     );
   }
 
-  if (!inRange) {
+  if (distance > range) {
     return (
       <View>
         <Text style={textStyles.oxygenRegLight18}>
-          Continue to next checkpoint
+          Continue to the next checkpoint
         </Text>
       </View>
-    )
+    );
   }
 
-  if (answerGiven && inRange) {
-    // console.log('answer givennnnnnn');
+  if (answerGiven) {
     return (
       <View>
         <Text style={textStyles.oxygenRegLight18}>
@@ -121,13 +130,18 @@ export const FlagQuestions = ({
         </Pressable>
       </View>
     );
-  } else if (inRange) {
-    // console.log('in range but no answerrrrrrrrrrrrr');
+  } else {
     return (
-      <View style={questionStyles.container}>
-        <Text style={textStyles.oxygenBoldLight18}>What country?</Text>
-
-        <Text style={textStyles.oxygenRegLight18}>{capitals[number]}</Text>
+      <View style={[questionStyles.container, questionStyles.glowProp]}>
+        <Text style={questionStyles.questionTextCenter}>
+          <Text style={questionStyles.questionTextCapital}>
+            {capitals[number]}
+          </Text>
+          <Text style={questionStyles.questionText}>
+            {" "}
+            is the capital of which country?
+          </Text>
+        </Text>
 
         <Pressable
           style={buttons.questionBtnSolid}

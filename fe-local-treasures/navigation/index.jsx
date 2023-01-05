@@ -4,12 +4,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import HomeTabs from "./HomeTabs";
 import { customTheme } from "../styles/customTheme";
 import { StartScreen } from "../screens/StartHunt";
+import { StatusBar } from "expo-status-bar";
 
 const Stack = createStackNavigator();
 
 export default function RootNavigation() {
   return (
     <NavigationContainer theme={customTheme}>
+      <StatusBar style="light" translucent={false} />
       <Stack.Navigator
         screenOptions={{
           headerShown: false,

@@ -15,6 +15,7 @@ export const FlagQuestions = ({
   distance,
   seconds,
   navigation,
+  radius,
 }) => {
   const [correctAnswerGiven, setCorrectAnswerGiven] = useState(false);
   const [answerGiven, setAnswerGiven] = useState(false);
@@ -24,8 +25,6 @@ export const FlagQuestions = ({
   const [random1, setRandom1] = useState(0);
   const [random2, setRandom2] = useState(0);
   const [allCapitals, setAllCapitals] = useState([]);
-
-  const range = 2000;
 
   useEffect(() => {
     getAllCapitals().then((capitals) => {
@@ -100,7 +99,7 @@ export const FlagQuestions = ({
     );
   }
 
-  if (distance > range) {
+  if (distance > radius) {
     return (
       <View>
         <Text style={textStyles.oxygenRegLight18}>

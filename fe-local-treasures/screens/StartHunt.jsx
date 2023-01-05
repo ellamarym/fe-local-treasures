@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Alert, Pressable, ScrollView, Text, View } from "react-native";
-import MapView, { Callout, Marker } from "react-native-maps";
+import MapView, { Callout, Circle, Marker } from "react-native-maps";
 import { styles } from "../styles/startHunt";
 import { textStyles } from "../styles/textStyles";
 import * as Location from "expo-location";
@@ -18,6 +18,8 @@ export const StartScreen = ({ route, navigation }) => {
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(true);
   const totalCheckpoints = Object.keys(hunt.checkpoints).length;
+
+  const radius = 100;
 
   useEffect(() => {
     const currentDistance = position
@@ -75,6 +77,25 @@ export const StartScreen = ({ route, navigation }) => {
     return markers;
   };
 
+  const circles = () => {
+    const circles = [];
+    for (let i = 1; i <= currentCheckpoint; i++) {
+      circles.push(
+        <Circle
+          key={i}
+          center={{
+            latitude: hunt.checkpoints[i].lat,
+            longitude: hunt.checkpoints[i].long,
+          }}
+          radius={radius}
+          fillColor={"rgba(50,133,200,0.2)"}
+          strokeColor={"rgba(50,133,200,1)"}
+        ></Circle>
+      );
+    }
+    return circles;
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -90,6 +111,7 @@ export const StartScreen = ({ route, navigation }) => {
           }}
         >
           {huntMarkers()}
+          {circles()}
         </MapView>
         <View style={globalStyles.switchButtonCenter}>
           <Pressable
@@ -145,6 +167,7 @@ export const StartScreen = ({ route, navigation }) => {
           distance,
           seconds,
           navigation,
+          radius,
         })}
       </View>
     </ScrollView>

@@ -5,6 +5,7 @@ import { styles } from "../styles/huntsTable";
 import { globalStyles } from "../styles/globalStyles";
 import { textStyles } from "../styles/textStyles";
 import { fetchStatsByUser } from "../utils/api/huntApi";
+import { formatTime } from "../utils/formatTime";
 
 
 export const UserStatsTable = ()=> {
@@ -21,13 +22,14 @@ useEffect(()=>{
 const stats = () => {
     return (
     userStats.map((stat) => {
+        
     return (
     <DataTable.Row key={stat.id}>
           <DataTable.Cell style={styles.widthThree}>
             <Text style={textStyles.oxygenRegLight14}>{stat.hunt}</Text>
           </DataTable.Cell>
           <DataTable.Cell style={styles.widthTwo}>
-            <Text style={textStyles.oxygenRegLight14}>{stat.time}</Text>
+            <Text style={textStyles.oxygenRegLight14}>{formatTime(stat.time)}</Text>
           </DataTable.Cell>
           <DataTable.Cell style={styles.widthOne}>
             <Text style={textStyles.oxygenRegLight14}>{stat.date}</Text>

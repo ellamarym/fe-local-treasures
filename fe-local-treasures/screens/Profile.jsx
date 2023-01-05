@@ -15,6 +15,7 @@ const auth = getAuth();
 
 export default function ProfileScreen({navigation}) {
   const { user } = useAuthentication();
+ 
   return (
     <View style={globalStyles.container}>
       <Text style={textStyles.oxygenRegLight18}>Welcome {user?.email}!</Text>

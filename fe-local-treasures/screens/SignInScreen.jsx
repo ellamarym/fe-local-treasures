@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { styles } from "../styles/signInScreen";
 import SigninForm from "./components/SigninForm";
@@ -28,14 +28,16 @@ export default function SignInScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <SigninForm
-        userInfo={userInfo}
-        setUserInfo={setUserInfo}
-        navigation={navigation}
-        signIn={signIn}
-      />
-      <StatusBar style="auto" />
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <SigninForm
+          userInfo={userInfo}
+          setUserInfo={setUserInfo}
+          navigation={navigation}
+          signIn={signIn}
+        />
+        <StatusBar style="auto" />
+      </View>
+    </ScrollView>
   );
 }

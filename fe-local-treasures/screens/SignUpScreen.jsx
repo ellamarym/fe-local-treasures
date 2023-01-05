@@ -112,8 +112,7 @@ export default function SignUpScreen({ navigation }) {
       userInfo.password === "" ||
       userInfo.username === "" ||
       userInfo.firstname === "" ||
-      userInfo.lastname === "" ||
-      userInfo.imgUrl === ""
+      userInfo.lastname === ""
     ) {
       setUserInfo({ ...userInfo, error: "All fields are required" });
       return;
@@ -146,9 +145,6 @@ export default function SignUpScreen({ navigation }) {
           pickImage={pickImage}
           signUp={signUp}
         />
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        ></View>
         <StatusBar style="auto" />
       </View>
     </ScrollView>

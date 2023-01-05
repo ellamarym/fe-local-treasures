@@ -1,5 +1,6 @@
 import React from "react";
 import { styles } from "../../styles/signInScreen";
+import { textStyles } from "../../styles/textStyles";
 import { Text, View } from "react-native";
 import { Button, Input } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -9,18 +10,22 @@ function SigninForm({ userInfo, navigation, setUserInfo, signIn }) {
     <View style={styles.controls}>
       <Input
         placeholder="Email"
-        containerStyle={styles.control}
+        style={styles.control}
         value={userInfo.email}
         onChangeText={(text) => setUserInfo({ ...userInfo, email: text })}
-        leftIcon={<Icon name="envelope" size={16} />}
+        leftIcon={
+          <Icon name="envelope" size={16} style={textStyles.oxygenRegLight16} />
+        }
       />
       <Input
         placeholder="Password"
-        containerStyle={styles.control}
+        style={styles.control}
         value={userInfo.password}
         onChangeText={(text) => setUserInfo({ ...userInfo, password: text })}
         secureTextEntry={true}
-        leftIcon={<Icon name="key" size={16} />}
+        leftIcon={
+          <Icon name="key" size={16} style={textStyles.oxygenRegLight16} />
+        }
       />
       {userInfo.error ? (
         <View style={styles.error}>

@@ -6,19 +6,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   controls: {
-    width: "80%",
+    padding: 30,
+    flex: 1,
     justifyContent: "center",
+    paddingTop: "50%",
   },
   control: {
-    marginTop: 10,
+    paddingLeft: 10,
+    color: "#FFFFFF",
   },
   forgotPassNav: {
     color: "#e7eef5",
-    fontWeight: "normal",
-    textDecorationLine: "underline",
+    fontWeight: "bold",
     textAlign: "center",
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 20,
+    fontSize: 16,
   },
 });
 

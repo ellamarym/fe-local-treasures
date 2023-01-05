@@ -1,22 +1,28 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
-import { Text, View, ScrollView } from "react-native";
-import { Button, Input } from "react-native-elements";
-import Icon from "react-native-vector-icons/FontAwesome";
+import { useState, useEffect } from "react";
+import { View, ScrollView } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { styles } from "../styles/signupScreens";
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import "firebase/auth";
-import ImageViewer from "./ImageViewer";
-import { textStyles } from "../styles/textStyles";
-import { buttons } from "../styles/buttons";
-import { globalStyles } from "../styles/globalStyles";
+import { getFirestore } from "firebase/firestore";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import SignUpForm from "./components/SignUpForm";
 
 const auth = getAuth();
+const db = getFirestore();
+const storage = getStorage();
 
 export default function SignUpScreen({ navigation }) {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState("");
+  const [progressBar, setProgressBar] = useState(0);
   const [userInfo, setUserInfo] = useState({
     username: "",
     firstname: "",
@@ -24,14 +30,15 @@ export default function SignUpScreen({ navigation }) {
     email: "",
     password: "",
     error: "",
+    imgUrl: "",
   });
 
-  const pickImageAsync = async () => {
+  const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       quality: 1,
     });
-
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
     } else {
@@ -39,117 +46,105 @@ export default function SignUpScreen({ navigation }) {
     }
   };
 
-  function signUp() {
+  useEffect(() => {
+    const uploadImage = async () => {
+      const blobImage = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          resolve(xhr.response);
+        };
+        xhr.onerror = function () {
+          reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
+        xhr.open("GET", selectedImage, true);
+        xhr.send(null);
+      });
+
+      const metadata = {
+        contentType: "image/jpeg",
+      };
+
+      const storageRef = ref(storage, "User/" + Date.now());
+      const uploadTask = uploadBytesResumable(storageRef, blobImage, metadata);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setUploadProgress("Upload is " + progress + "% done");
+          setProgressBar(progress);
+          switch (snapshot.state) {
+            case "paused":
+              break;
+            case "running":
+              break;
+          }
+        },
+        (error) => {
+          switch (error.code) {
+            case "storage/unauthorized":
+              break;
+            case "storage/canceled":
+              break;
+            case "storage/unknown":
+              break;
+          }
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setUserInfo({ ...userInfo, imgUrl: downloadURL });
+            console.log("File available at", downloadURL);
+          });
+        }
+      );
+    };
+
+    if (selectedImage !== null) {
+      uploadImage();
+    }
+  }, [selectedImage]);
+
+  async function signUp() {
     if (
-      (userInfo.email === "" ||
-        userInfo.password === "" ||
-        userInfo.username === "",
-      userInfo.firstname === "" || userInfo.lastname === "")
+      userInfo.email === "" ||
+      userInfo.password === "" ||
+      userInfo.username === "" ||
+      userInfo.firstname === "" ||
+      userInfo.lastname === ""
     ) {
       setUserInfo({ ...userInfo, error: "All fields are required" });
       return;
     }
-    // console.log("userInfo", userInfo)
-    // try {
-    //   await createUserWithEmailAndPassword(
-    //     auth,
-    //     userInfo.email,
-    //     userInfo.password,
-    //     userInfo.username,
-    //     userInfo.firstname,
-    //     userInfo.lastname
-    //   );
-    //   navigation.navigate("Sign In");
-    // } catch (err) {
-    //   setUserInfo({ ...userInfo, error: err.message });
-    // }
-
+    try {
+      await createUserWithEmailAndPassword(
+        auth,
+        userInfo.email,
+        userInfo.password
+      );
+      navigation.navigate("Sign In");
+    } catch (err) {
+      if (err) {
+        setUserInfo({ ...userInfo, error: err.message.toString() });
+        return;
+      }
+    }
     setUserInfo({ ...userInfo, error: "" });
   }
 
   return (
     <ScrollView>
-      <View style={globalStyles.container}>
-        <View style={styles.controls}>
-          <Input
-            style={textStyles.oxygenRegLight16}
-            placeholder="username"
-            containerStyle={styles.control}
-            value={userInfo.username}
-            onChangeText={(text) => {
-              setUserInfo({ ...userInfo, username: text });
-            }}
-            leftIcon={<Icon name="user" style={textStyles.oxygenRegLight16} />}
-          />
-          <Input
-            style={textStyles.oxygenRegLight16}
-            placeholder="firstname"
-            containerStyle={styles.control}
-            value={userInfo.firstname}
-            onChangeText={(text) => {
-              setUserInfo({ ...userInfo, firstname: text });
-            }}
-            leftIcon={<Icon name="user" style={textStyles.oxygenRegLight16} />}
-          />
-          <Input
-            style={textStyles.oxygenRegLight16}
-            placeholder="lastname"
-            containerStyle={styles.control}
-            value={userInfo.lastname}
-            onChangeText={(text) => {
-              setUserInfo({ ...userInfo, lastname: text });
-            }}
-            leftIcon={<Icon name="user" style={textStyles.oxygenRegLight16} />}
-          />
-          <Input
-            style={textStyles.oxygenRegLight16}
-            placeholder="Email"
-            containerStyle={styles.control}
-            value={userInfo.email}
-            onChangeText={(text) => {
-              setUserInfo({ ...userInfo, email: text });
-            }}
-            leftIcon={
-              <Icon name="envelope" style={textStyles.oxygenRegLight16} />
-            }
-          />
-          <Input
-            style={textStyles.oxygenRegLight16}
-            placeholder="Password"
-            containerStyle={styles.control}
-            value={userInfo.password}
-            onChangeText={(text) => {
-              setUserInfo({ ...userInfo, password: text });
-            }}
-            secureTextEntry={true}
-            leftIcon={<Icon name="key" style={textStyles.oxygenRegLight16} />}
-          />
-
-          <View style={styles.imageContainer}>
-            <ImageViewer selectedImage={selectedImage} />
-          </View>
-
-          <Button
-            title="Choose photo"
-            buttonStyle={buttons.purpleBtnBorder}
-            onPress={pickImageAsync}
-          ></Button>
-
-          {userInfo.error ? (
-            <View style={styles.error}>
-              <Text style={styles.error}>{userInfo.error}</Text>
-            </View>
-          ) : null}
-          <Button
-            title="Sign Up"
-            buttonStyle={buttons.purpleBtnSolid}
-            onPress={signUp}
-          ></Button>
-        </View>
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        ></View>
-
+      <View style={styles.container}>
+        <SignUpForm
+          userInfo={userInfo}
+          setUserInfo={setUserInfo}
+          uploadProgress={uploadProgress}
+          progressBar={progressBar}
+          selectedImage={selectedImage}
+          pickImage={pickImage}
+          signUp={signUp}
+        />
         <StatusBar style="auto" />
       </View>
     </ScrollView>

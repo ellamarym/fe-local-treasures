@@ -30,6 +30,7 @@ const buttons = StyleSheet.create({
 
   questionBtnSolid: {
     paddingVertical: 8,
+    paddingHorizontal: 4,
     width: 200,
     marginVertical: 12,
     borderRadius: 50,

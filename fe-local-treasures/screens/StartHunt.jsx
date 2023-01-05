@@ -20,7 +20,7 @@ export const StartScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     setDistance(null);
-    setInRange(false)
+    setInRange(false);
   }, [currentCheckpoint]);
 
   useEffect(() => {
@@ -50,16 +50,15 @@ export const StartScreen = ({ route, navigation }) => {
         const roundedDistance = Math.round(currentDistance);
         setDistance(roundedDistance);
         if (distance < 100 && distance) {
-          console.log(distance);
+          //console.log(distance);
 
           setInRange(true);
-          console.log('in distance ifffffffffffff');
-          console.log(inRange);
+          //console.log('in distance ifffffffffffff');
+          //console.log(inRange);
         }
       } else if (!isActive && seconds !== 0) {
         clearInterval(interval);
       }
-      
     }, 1000);
 
     return () => clearInterval(interval);
@@ -125,7 +124,7 @@ export const StartScreen = ({ route, navigation }) => {
                     onPress: () => {},
                   },
                   {
-                    title: "OK",
+                    text: "OK",
                     onPress: () => {
                       navigation.navigate("Home");
                     },
@@ -155,7 +154,7 @@ export const StartScreen = ({ route, navigation }) => {
             <Text style={textStyles.oxygenRegLight16}>Time</Text>
             <Text style={textStyles.oxygenBoldLight24}>
               {formatTime(seconds)}
-            <Text style={textStyles.oxygenRegLight16}>Z: {inRange}</Text>
+              <Text style={textStyles.oxygenRegLight16}>Z: {inRange}</Text>
             </Text>
           </View>
         </View>
@@ -166,7 +165,7 @@ export const StartScreen = ({ route, navigation }) => {
           setIsActive,
           inRange,
           setInRange,
-          distance
+          distance,
         })}
       </View>
     </ScrollView>

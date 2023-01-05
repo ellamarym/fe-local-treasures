@@ -5,17 +5,39 @@ const questionStyles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  controls: { marginTop: 40, marginBottom: 200 },
-
-  flagContainer: {
-    flex: 1,
-    borderWidth: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 15,
     margin: 20,
-    width: 300,
-    height: 150,
+    backgroundColor: "#efefef",
+    borderRadius: 10,
+    borderColor: "f5f8fb",
+  },
+
+  glowProp: {
+    shadowColor: "#A3AD8B",
+    shadowOffset: { width: 7, height: 7 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+  },
+
+  questionTextCenter: {
+    textAlign: "center",
+  },
+
+  questionTextCapital: {
+    fontFamily: "OxygenBold",
+    color: "#000",
+    fontSize: 18,
+    alignSelf: "center",
+    paddingBottom: 30,
+    textDecorationLine: "underline",
+  },
+  questionText: {
+    fontFamily: "OxygenBold",
+    color: "#000",
+    fontSize: 18,
+    alignSelf: "center",
+    paddingBottom: 30,
+    textAlign: "center",
   },
 });
 

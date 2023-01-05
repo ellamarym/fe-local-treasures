@@ -126,7 +126,10 @@ export default function SignUpScreen({ navigation }) {
       );
       navigation.navigate("Sign In");
     } catch (err) {
-      setUserInfo({ ...userInfo, error: err });
+      if (err) {
+        setUserInfo({ ...userInfo, error: err.message.toString() });
+        return;
+      }
     }
     setUserInfo({ ...userInfo, error: "" });
   }

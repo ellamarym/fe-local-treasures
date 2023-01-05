@@ -6,7 +6,7 @@ import { buttons } from "../styles/buttons";
 import { textStyles } from "../styles/textStyles";
 import { globalStyles } from "../styles/globalStyles";
 
-export default function HuntScreen({ route }) {
+export default function HuntScreen({ route, navigation }) {
   const { id } = route.params;
   const { user } = useAuthentication();
 
@@ -32,8 +32,14 @@ export default function HuntScreen({ route }) {
             Distance: {hunt.distance} miles
           </Text>
 
-          <Pressable style={buttons.purpleBtnSolid} disabled={!user}>
-            <Text style={textStyles.oxygenRegLight16}>
+          <Pressable
+            style={buttons.mustardBtnSolid}
+            disabled={!user}
+            onPress={() => {
+              navigation.navigate("StartHunt", { hunt: hunt });
+            }}
+          >
+            <Text style={textStyles.oxygenRegDark16}>
               {user ? "Start" : "Log in to start"}
             </Text>
           </Pressable>

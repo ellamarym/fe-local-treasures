@@ -1,14 +1,12 @@
-import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-
 import HomeScreen from "../screens/Home";
-import MapScreen from "../screens/Map";
 import HuntScreen from "../screens/Hunt";
 import { HuntsTable } from "../screens/HuntsTable";
+import MapScreen from "../screens/Map";
 
 const Stack = createStackNavigator();
 
-export default function HomeStack() {
+export default function HuntStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomeScreen} />

@@ -7,6 +7,7 @@ let customFonts = {
   AmericanTypewriter: require("./assets/fonts/AmericanTypewriter.ttf"),
   OxygenLight: require("./assets/fonts/Oxygen-Light.ttf"),
   OxygenReg: require("./assets/fonts/Oxygen-Regular.ttf"),
+  OxygenBold: require("./assets/fonts/Oxygen-Bold.ttf"),
 };
 
 export default function App() {

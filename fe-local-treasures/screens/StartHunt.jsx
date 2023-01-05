@@ -20,7 +20,7 @@ export const StartScreen = ({ route, navigation }) => {
   const [isActive, setIsActive] = useState(true);
   const totalCheckpoints = Object.keys(hunt.checkpoints).length;
 
-  const radius = 2000;
+  const radius = 15;
 
   useEffect(() => {
     const currentDistance = position

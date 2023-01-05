@@ -3,9 +3,7 @@ import axios from "axios";
 const localTreasuresApi = axios.create({
   baseURL: "https://brainy-worm-wear.cyclic.app/api",
 });
-const countriesAPI = axios.create({
-  baseURL: "https://countriesnow.space/api/v0.1/countries",
-});
+
 
 export const fetchHunts = () => {
   return localTreasuresApi.get("/hunts").then(({ data: { hunts } }) => {
@@ -19,34 +17,15 @@ export const fetchHuntById = (id) => {
   });
 };
 
-export const getAllCountries = () => {
-  return countriesAPI
-    .get("/flag/images")
-    .then((response) => {
-      return response.data.data.map((country) => {
-        return country.name;
-      });
-    })
-    .catch((err) => {
-      return { error: err.response.data.msg };
-    });
-};
-
-export const getAllFlagUrls = () => {
-  return countriesAPI
-    .get("/flag/images")
-    .then((response) => {
-      return response.data.data.map((country) => {
-        return country.flag;
-      });
-    })
-    .catch((err) => {
-      return { error: err.response.data.msg };
-    });
-};
 
 export const getAllCapitals = () => {
   return axios.get("https://restcountries.com/v2/all").then((response) => {
     return response.data;
   });
 };
+
+export const fetchStatsByUser = (user) => {
+  return localTreasuresApi.get(`/users/${user}/stats`).then(({data: {stats}})=> {
+    return stats
+  })
+}

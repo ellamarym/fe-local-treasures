@@ -8,16 +8,17 @@ import { getAuth } from "firebase/auth";
 import { globalStyles } from "../styles/globalStyles";
 import { textStyles } from "../styles/textStyles";
 import { buttons } from "../styles/buttons";
+import { userStatsTable } from "./UserStatsTable";
+
 
 const auth = getAuth();
 
-export default function ProfileScreen() {
+export default function ProfileScreen({navigation}) {
   const { user } = useAuthentication();
-
   return (
     <View style={globalStyles.container}>
       <Text style={textStyles.oxygenRegLight18}>Welcome {user?.email}!</Text>
-
+      
       <Pressable
         style={buttons.purpleBtnSolid}
         width={150}
@@ -25,7 +26,10 @@ export default function ProfileScreen() {
       >
         <Text style={textStyles.oxygenRegLight16}>Sign out</Text>
       </Pressable>
-
+     <Pressable onPress={()=> {
+      navigation.navigate("User stats")
+     }}><Text>User stats</Text></Pressable>
+    
       <StatusBar style="auto" />
     </View>
   );

@@ -54,7 +54,7 @@ export const HuntsTable = ({ navigation }) => {
   return (
     <View style={styles.view}>
       <DataTable>
-        <DataTable.Header>
+        <DataTable.Header style={styles.headerRow}>
           <DataTable.Title style={styles.widthThree}>
             <Text style={textStyles.oxygenRegLight14}>Title</Text>
           </DataTable.Title>

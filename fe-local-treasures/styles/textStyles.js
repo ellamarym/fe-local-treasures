@@ -54,6 +54,13 @@ const textStyles = StyleSheet.create({
     fontSize: 14,
   },
 
+  oxygenBoldLight14: {
+    alignSelf: "center",
+    color: "#e7eef5",
+    fontFamily: "OxygenBold",
+    fontSize: 14,
+  },
+
   oxygenRegDark18: {
     alignSelf: "center",
     color: "#000000",

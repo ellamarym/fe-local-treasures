@@ -13,7 +13,7 @@ const buttons = StyleSheet.create({
     borderColor: "#835980",
     borderWidth: 2,
     paddingVertical: 12,
-    paddingHorizontal: 60,
+
     marginVertical: 10,
     borderRadius: 50,
     backgroundColor: "transparent",

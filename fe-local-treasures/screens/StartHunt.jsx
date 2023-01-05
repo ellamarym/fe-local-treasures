@@ -9,6 +9,7 @@ import { FlagQuestions } from "../utils/questions";
 import { globalStyles } from "../styles/globalStyles";
 import { buttons } from "../styles/buttons";
 import { formatTime } from "../utils/formatTime";
+import ConfettiCannon from "react-native-confetti-cannon";
 
 export const StartScreen = ({ route, navigation }) => {
   const { hunt } = route.params;
@@ -19,7 +20,7 @@ export const StartScreen = ({ route, navigation }) => {
   const [isActive, setIsActive] = useState(true);
   const totalCheckpoints = Object.keys(hunt.checkpoints).length;
 
-  const radius = 100;
+  const radius = 2000;
 
   useEffect(() => {
     const currentDistance = position

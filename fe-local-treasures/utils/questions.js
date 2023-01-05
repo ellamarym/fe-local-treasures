@@ -6,6 +6,7 @@ import { SvgUri } from "react-native-svg";
 import { buttons } from "../styles/buttons";
 import { questionStyles } from "../styles/questionStyles";
 import { formatTime } from "./formatTime";
+import ConfettiCannon from "react-native-confetti-cannon";
 
 export const FlagQuestions = ({
   totalCheckpoints,
@@ -83,6 +84,14 @@ export const FlagQuestions = ({
   if (isGameOver) {
     return (
       <View>
+        <ConfettiCannon
+          count={200}
+          origin={{ x: 0, y: 0 }}
+          autoStart={true}
+          fadeOut={true}
+          fallSpeed={5000}
+          explosionSpeed={1500}
+        />
         <Text style={textStyles.oxygenBoldLight32}>Congratulations</Text>
         <Text style={textStyles.oxygenRegLight24}>
           You won in {formatTime(totalGameTime)}
